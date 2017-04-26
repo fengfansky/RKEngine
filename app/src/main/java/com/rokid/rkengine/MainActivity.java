@@ -6,27 +6,56 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.rokid.rkengine.scheduler.AppManagerImp;
 import com.rokid.rkengine.parser.ParserProxy;
+import com.rokid.rkengine.scheduler.AppManagerImp;
 import com.rokid.rkengine.scheduler.AppStack;
 import com.rokid.rkengine.utils.DemoTestUtils;
 
 public class MainActivity extends Activity {
-
-    private AppManagerImp appManager = null;
-
-    private ParserProxy parserProxy;
 
     private static final String MSG1 = "msg1";
     private static final String MSG2 = "msg2";
     private static final String MSG3 = "msg3";
     private static final String MSG4 = "msg4";
     private static final String MSG5 = "msg5";
-
     private static final int TIME_ONE_SECOND = 1000;
     private static final int TIME_TWO_SECOND = 2000;
     private static final int TIME_THREE_SECOND = 3000;
     private static final int TIME_FOUR_SECOND = 4000;
+    private AppManagerImp appManager = null;
+    private ParserProxy parserProxy;
+    private Handler myHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String value = msg.getData().getString("TEST");
+            switch (value) {
+                case MSG1:
+                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP1, DemoTestUtils.TEST_ASR1, DemoTestUtils.TEST_ACTION1);
+                    break;
+
+                case MSG2:
+                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP2, DemoTestUtils.TEST_ASR2, DemoTestUtils.TEST_ACTION2);
+                    break;
+
+                case MSG3:
+                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP3, DemoTestUtils.TEST_ASR3, DemoTestUtils.TEST_ACTION3);
+                    break;
+
+                case MSG4:
+                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP4, DemoTestUtils.TEST_ASR4, DemoTestUtils.TEST_ACTION4);
+                    break;
+
+                case MSG5:
+                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP5, DemoTestUtils.TEST_ASR5, DemoTestUtils.TEST_ACTION5);
+                    break;
+
+            }
+
+            super.handleMessage(msg);
+        }
+    };
+
+    //app1:cut app2:cut app3:scene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +76,11 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 super.run();
-                test8();
+                testCLoudApp();
             }
         }.start();
 
     }
-
-    //app1:cut app2:cut app3:scene
 
     // test cut 自身
     private void test1() {
@@ -109,6 +136,10 @@ public class MainActivity extends Activity {
         sendMessage(MSG4, TIME_FOUR_SECOND);
     }
 
+    private void testCLoudApp() {
+        sendMessage(MSG5, TIME_ONE_SECOND);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -125,38 +156,6 @@ public class MainActivity extends Activity {
         message.setData(bundle);
         myHandler.sendMessageDelayed(message, time);
     }
-
-
-    private Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            String value = msg.getData().getString("TEST");
-            switch (value) {
-                case MSG1:
-                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP1, DemoTestUtils.TEST_ASR1, DemoTestUtils.TEST_ACTION1);
-                    break;
-
-                case MSG2:
-                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP2, DemoTestUtils.TEST_ASR2, DemoTestUtils.TEST_ACTION2);
-                    break;
-
-                case MSG3:
-                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP3, DemoTestUtils.TEST_ASR3, DemoTestUtils.TEST_ACTION3);
-                    break;
-
-                case MSG4:
-                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP4, DemoTestUtils.TEST_ASR4, DemoTestUtils.TEST_ACTION4);
-                    break;
-
-                case MSG5:
-                    parserProxy.startParse(MainActivity.this, DemoTestUtils.TEST_NLP5, DemoTestUtils.TEST_ASR5, DemoTestUtils.TEST_ACTION5);
-                    break;
-
-            }
-
-            super.handleMessage(msg);
-        }
-    };
 
 
 }
