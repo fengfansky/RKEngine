@@ -1,26 +1,21 @@
 package com.rokid.rkengine.parser;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.rokid.rkengine.bean.CommonResponse;
+import com.rokid.rkengine.bean.action.ActionResponse;
 import com.rokid.rkengine.bean.action.ResponseBean;
 import com.rokid.rkengine.bean.action.response.action.ActionBean;
 import com.rokid.rkengine.bean.action.response.action.media.MediaBean;
 import com.rokid.rkengine.bean.action.response.action.voice.VoiceBean;
 import com.rokid.rkengine.bean.nlp.NLPBean;
-import com.rokid.rkengine.scheduler.AppManagerImp;
-import com.rokid.rkengine.bean.action.ActionResponse;
+import com.rokid.rkengine.scheduler.AppStarter;
 import com.rokid.rkengine.utils.CommonConfig;
 import com.rokid.rkengine.utils.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import rokid.rkengine.scheduler.AppInfo;
 
 /**
  * Created by fanfeng on 2017/4/16.
@@ -28,24 +23,14 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class ParserProxy {
 
-    private static final String KEY_NLP = "nlp";
+
     private static final String KEY_COMMON_RESPONSE = "extra";
 
-    private static final String CLOUD_APP_PACKAGE_NAME = "com.rokid.cloudappclient";
-
-    private static final String CLOUD_APP_ACTIVITY_NAME = "com.rokid.cloudappclient.activity.CloudActivity";
-
-    private static final String REMOTE_IRUNTIME_SERVICE = "rokid.os.IRuntimeService";
-
-    private AppManagerImp appManager = AppManagerImp.getInstance();
+    private static final String INTENT_EXECUTE = "execute";
 
     public static ParserProxy getInstance() {
 
         return SingleHolder.instance;
-    }
-
-    private static class SingleHolder {
-        private static final ParserProxy instance = new ParserProxy();
     }
 
     public void startParse(Context context, final String nlpStr, String asr, String actionStr) {
@@ -74,6 +59,8 @@ public class ParserProxy {
             return;
         }
 
+        AppStarter appStarter = new AppStarter();
+
         if (isCloudApp) {
 
             if (checkAction(actionResponse))
@@ -93,46 +80,19 @@ public class ParserProxy {
 
             switch (shot) {
                 case ResponseBean.SHOT_SCENE:
-                    startCloudApp(context, CommonConfig.SCENE_DOMAIN, "execute", slots);
+                    appStarter.startCloudApp(context, CommonConfig.SCENE_DOMAIN, INTENT_EXECUTE, slots);
                     break;
 
                 case ResponseBean.SHOT_CUT:
-                    startCloudApp(context, CommonConfig.CUT_DOMAIN, "execute", slots);
+                    appStarter.startCloudApp(context, CommonConfig.CUT_DOMAIN, INTENT_EXECUTE, slots);
                     break;
                 default:
                     Logger.d("unknow shot:  " + shot);
             }
+
         } else {
-            //TODO appManager.queryAppInfo(appId);
-            final AppInfo appInfo = appManager.queryAppInfoByID(actionResponse.getAppId());
-            appInfo.domain = nlp.getDomain();
-            if (appInfo == null) {
-                Logger.d("appInfo is null ");
-                return;
-            }
-            Logger.d("aidl startApp");
-
-            appManager.startApp(appInfo, nlpStr);
-            appManager.storeNLP(appInfo.appId, nlpStr);
+            appStarter.startNativeApp(nlpStr, actionResponse);
         }
-    }
-
-    private void startCloudApp(Context context, String domain, String intentType, Map<String, String> slots) {
-        if (context == null)
-            return;
-        NLPBean nlpBean = new NLPBean();
-        nlpBean.setDomain(domain);
-        nlpBean.setIntent(intentType);
-        nlpBean.setSlots(slots);
-        String nlpStr = new Gson().toJson(nlpBean);
-
-        Intent cloudAppIntent = new Intent();
-        ComponentName component = new ComponentName(CLOUD_APP_PACKAGE_NAME, CLOUD_APP_ACTIVITY_NAME);
-        cloudAppIntent.setComponent(component);
-        cloudAppIntent.setAction(Intent.ACTION_MAIN);
-        cloudAppIntent.putExtra(KEY_NLP, nlpStr);
-        cloudAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(cloudAppIntent);
     }
 
     private boolean checkAction(ActionResponse action) {
@@ -256,6 +216,10 @@ public class ParserProxy {
         }
 
         return true;
+    }
+
+    private static class SingleHolder {
+        private static final ParserProxy instance = new ParserProxy();
     }
 
 }
