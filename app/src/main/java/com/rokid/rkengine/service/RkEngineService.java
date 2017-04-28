@@ -7,45 +7,17 @@ import android.os.RemoteException;
 
 import com.rokid.rkengine.parser.ParserProxy;
 import com.rokid.rkengine.scheduler.AppManagerImp;
-import com.rokid.rkengine.scheduler.AppStack;
 import com.rokid.rkengine.utils.Logger;
 
 import rokid.rkengine.IRKAppEngine;
+import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
 
 public class RkEngineService extends Service {
 
     private AppManagerImp appManager;
-
-    public RkEngineService() {
-
-    }
-
-    @Override
-    public void onCreate() {
-
-        appManager = AppManagerImp.getInstance();
-        super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
-            Logger.i("onStartCommand with invalid intent");
-            return super.onStartCommand(intent, flags, startId);
-        }
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-
-        return binder;
-    }
-
-
-    private IBinder binder = new IRKAppEngine.Stub() {
+    public IBinder binder = new IRKAppEngine.Stub() {
 
         @Override
         public void clearTaskStack() throws RemoteException {
@@ -60,7 +32,7 @@ public class RkEngineService extends Service {
 
         @Override
         public void launch(String nlp, String asr, String action) throws RemoteException {
-            Logger.d("launch RKEngineService startParse nlp : " + nlp.toString() + " asr : " + asr.toString() + "action : " + action.toString());
+            Logger.d("launch RKEngineService startParse nlp : " + nlp + " asr : " + asr + "action : " + action);
             ParserProxy.getInstance().startParse(RkEngineService.this
                     , nlp, asr, action);
         }
@@ -76,6 +48,37 @@ public class RkEngineService extends Service {
             appManager.startApp(lastApp, appManager.getNLP(lastApp.appId));
         }
 
+        @Override
+        public void registerDomainChangeCallback(IRKAppEngineDomainChangeCallback onDomainChangedListener) throws RemoteException {
+            if (onDomainChangedListener != null) {
+                Logger.d("setOnDomainChangedListener");
+                appManager.setOnDomainChangedListener(onDomainChangedListener);
+            }
+        }
+
     };
 
+    public RkEngineService() {
+
+    }
+
+    @Override
+    public void onCreate() {
+        appManager = AppManagerImp.getInstance();
+        appManager.bindService(this);
+        super.onCreate();
+    }
+
+
+    @Override
+    public IBinder onBind(Intent intent) {
+
+        return binder;
+    }
+
+    @Override
+    public void onDestroy() {
+        appManager.unBindService();
+        super.onDestroy();
+    }
 }
