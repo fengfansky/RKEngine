@@ -39,15 +39,15 @@ public class ParserProxy {
             Logger.e("str empty error!! action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
             return;
         }
-        Logger.d("action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
-
+        Logger.d("action  ---> " + actionStr);
+        Logger.d("nlp -------> " + nlpStr);
+        Logger.d("asr -------> " + asr);
         ActionResponseParser actionResponseParser = new ActionResponseParser(actionStr);
         ActionResponse actionResponse = actionResponseParser.execute();
 
         NLPParser nlpParser = new NLPParser(nlpStr);
         NLPBean nlp = nlpParser.execute();
 
-        boolean isCloudApp = nlp.isCloud();
 
         if (actionResponse == null) {
             Logger.d("actionResponse is null");
@@ -59,6 +59,7 @@ public class ParserProxy {
             return;
         }
 
+        boolean isCloudApp = nlp.isCloud();
         AppStarter appStarter = new AppStarter();
 
         if (isCloudApp) {
@@ -74,7 +75,6 @@ public class ParserProxy {
             final Map<String, String> slots = new HashMap<>();
             slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
             nlp.setSlots(slots);
-            Logger.d("extra: " + commonResponse.toString());
 
             String shot = actionResponse.getResponse().getShot();
 
@@ -100,8 +100,6 @@ public class ParserProxy {
             Logger.i("checkCloudAppResponse: action is null");
             return true;
         }
-
-        Logger.d("action response : " + action.toString());
 
         if (!CommonConfig.PROTOCOL_VERSION.equals(action.getVersion())) {
             Logger.i("checkCloudAppAction: given protocol version: " + action.getVersion() + " is invalid");
@@ -183,9 +181,6 @@ public class ParserProxy {
 
     /**
      * Private method to check voice, media and display
-     *
-     * @param responseBean
-     * @return
      */
     private boolean checkActionElements(ResponseBean responseBean) {
         ActionBean responseAction = responseBean.getAction();

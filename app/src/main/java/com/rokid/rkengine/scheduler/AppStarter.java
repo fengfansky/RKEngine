@@ -39,6 +39,7 @@ public class AppStarter {
         cloudAppIntent.setAction(Intent.ACTION_MAIN);
         cloudAppIntent.putExtra(KEY_NLP, nlpStr);
         cloudAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Logger.d("intent startCloudApp");
         context.startActivity(cloudAppIntent);
     }
 
@@ -48,7 +49,7 @@ public class AppStarter {
             Logger.d("appInfo is null ");
             return;
         }
-        Logger.d("aidl startApp");
+        Logger.d("aidl startNativeApp ");
 
         appManager.startApp(appInfo, nlpStr);
         appManager.storeNLP(appInfo.appId, nlpStr);

@@ -7,14 +7,14 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import rokid.rkengine.scheduler.AppInfo;
-
 import com.rokid.rkengine.utils.Logger;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import rokid.rkengine.IAppManagerProxy;
+import rokid.rkengine.IRKAppEngineDomainChangeCallback;
+import rokid.rkengine.scheduler.AppInfo;
 
 
 /**
@@ -23,49 +23,13 @@ import rokid.rkengine.IAppManagerProxy;
 
 public class AppManagerImp implements IAppManager {
 
-    private IAppManagerProxy appManagerProxy;
-
-    private AppStateManager appStateManager;
-
-    private AppStack appStack = AppStack.getInstance();
-
-    private Context context;
-
-    private Map<String, String> nlpMaps = new ConcurrentHashMap<>();
-
-
     private static final String SERVICE_NAME = "com.rokid.runtime.openvoice.RKNativeAppClientService";
     private static final String PACKAGE_NAME = "com.rokid.runtime";
-
-    private AppManagerImp() {
-    }
-
-    public static AppManagerImp getInstance() {
-
-        return SingleHolder.instance;
-    }
-
-    private static class SingleHolder {
-        private static final AppManagerImp instance = new AppManagerImp();
-    }
-
-    @Override
-    public void bindService(Context context) {
-        this.context = context;
-        Intent binderIntent = new Intent();
-        binderIntent.setComponent(new ComponentName(PACKAGE_NAME, SERVICE_NAME));
-        boolean isBind = context.bindService(binderIntent, conn, Context.BIND_AUTO_CREATE);
-        Logger.d("isBind RemoteService " + isBind);
-
-    }
-
-    @Override
-    public void unBindService() {
-        if (context == null)
-            return;
-        context.unbindService(conn);
-    }
-
+    private IAppManagerProxy appManagerProxy;
+    private AppStateManager appStateManager;
+    private AppStack appStack = AppStack.getInstance();
+    private Context context;
+    private Map<String, String> nlpMaps = new ConcurrentHashMap<>();
     private ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -81,6 +45,30 @@ public class AppManagerImp implements IAppManager {
 
         }
     };
+
+    private AppManagerImp() {
+    }
+
+    public static AppManagerImp getInstance() {
+
+        return SingleHolder.instance;
+    }
+
+    @Override
+    public void bindService(Context context) {
+        this.context = context;
+        Intent binderIntent = new Intent();
+        binderIntent.setComponent(new ComponentName(PACKAGE_NAME, SERVICE_NAME));
+        boolean isBind = context.bindService(binderIntent, conn, Context.BIND_AUTO_CREATE);
+        Logger.d("isBind RemoteService " + isBind);
+    }
+
+    @Override
+    public void unBindService() {
+        if (context == null)
+            return;
+        context.unbindService(conn);
+    }
 
     @Override
     public void setAppStateCallBack(AppStateManager callback) {
@@ -111,7 +99,7 @@ public class AppManagerImp implements IAppManager {
 
     @Override
     public void startApp(AppInfo appInfo, String extra) {
-        Logger.d("appManager startApp appInfo : " + appInfo.appId + " extra : " + extra.toString());
+        Logger.d("appManager startApp appInfo : " + appInfo.appId + " extra : " + extra);
 
         if (appManagerProxy == null)
             return;
@@ -189,6 +177,14 @@ public class AppManagerImp implements IAppManager {
 
     public String getNLP(String key) {
         return nlpMaps.get(key);
+    }
+
+    public void setOnDomainChangedListener(IRKAppEngineDomainChangeCallback listener) {
+        appStack.setOnDomainChangedListener(listener);
+    }
+
+    private static class SingleHolder {
+        private static final AppManagerImp instance = new AppManagerImp();
     }
 
 }

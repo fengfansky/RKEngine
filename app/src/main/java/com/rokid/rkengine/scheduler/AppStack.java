@@ -1,11 +1,12 @@
 package com.rokid.rkengine.scheduler;
 
+import android.os.RemoteException;
+
 import com.rokid.rkengine.utils.Logger;
 
-import java.util.Map;
 import java.util.Stack;
-import java.util.concurrent.ConcurrentHashMap;
 
+import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
 /**
@@ -16,6 +17,8 @@ public class AppStack {
 
     private Stack<AppInfo> appStack = new Stack<>();
 
+    private IRKAppEngineDomainChangeCallback onDomainChangedListener;
+
     private AppStack() {
     }
 
@@ -23,8 +26,10 @@ public class AppStack {
         return SingleHolder.instance;
     }
 
-    private static class SingleHolder {
-        private static final AppStack instance = new AppStack();
+    public void setOnDomainChangedListener(IRKAppEngineDomainChangeCallback listener) {
+        if (listener != null) {
+            onDomainChangedListener = listener;
+        }
     }
 
     public void pushApp(AppInfo newApp) {
@@ -33,26 +38,26 @@ public class AppStack {
         }
         if (appStack.empty()) {
             appStack.push(newApp);
+            onDomainChanged(newApp.appId, null);
         } else {
             AppInfo lastApp = appStack.peek();
             Logger.d("appStack not empty lastType is " + lastApp.type + " newAppType is " + newApp.type);
-            if (lastApp == null) {
-                Logger.d("lastApp is null");
-                return;
-            }
-            if (lastApp.appId == newApp.appId) {
+
+            if (lastApp.appId.equals(newApp.appId)) {
                 Logger.d("lastApp is the same with newApp");
                 return;
             }
             if (AppInfo.TYPE_CUT == lastApp.type) {
-                appStack.pop();
                 appStack.push(newApp);
+                onDomainChanged(newApp.appId, null);
             } else if (AppInfo.TYPE_SCENE == lastApp.type) {
                 if (AppInfo.TYPE_CUT == newApp.type) {
                     appStack.push(newApp);
+                    onDomainChanged(newApp.appId, lastApp.appId);
                 } else if (AppInfo.TYPE_SCENE == newApp.type) {
                     appStack.pop();
                     appStack.push(newApp);
+                    onDomainChanged(newApp.appId, null);
                 }
             }
         }
@@ -70,6 +75,14 @@ public class AppStack {
         }
         AppInfo currentApp = appStack.pop();
         Logger.d("popApp appStack size : " + appStack.size() + " top app is " + peekApp());
+        if (onDomainChangedListener != null) {
+            AppInfo lastApp = appStack.peek();
+            if (lastApp != null) {
+                onDomainChanged(currentApp.appId, lastApp.appId);
+            } else {
+                onDomainChanged(currentApp.appId, null);
+            }
+        }
         return currentApp;
     }
 
@@ -79,19 +92,25 @@ public class AppStack {
         return appStack.peek();
     }
 
-    //TODO getLastApp
-    //stack max size is 2.
     public AppInfo getLastApp() {
-        if (appStack.isEmpty()) {
-            Logger.d("getLastApp stack empty");
+        if (appStack.isEmpty() || appStack.size() == 1) {
+            Logger.d("getLastApp invalidate");
             return null;
-        } else if (appStack.size() == 1) {
-            Logger.d("getLastApp lastApp not exits ,return top app");
-            return appStack.peek();
         } else {
-            appStack.pop();
+            AppInfo currentApp = appStack.pop();
             AppInfo lastApp = appStack.peek();
+            onDomainChanged(currentApp.appId, lastApp.appId);
             return lastApp;
+        }
+    }
+
+    private void onDomainChanged(String currentDomain, String lastDomain) {
+        if (onDomainChangedListener != null) {
+            try {
+                onDomainChangedListener.onDomainChange(currentDomain, lastDomain);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -110,6 +129,10 @@ public class AppStack {
     public void clearAppStack() {
         Logger.d("clearAppStack");
         appStack.clear();
+    }
+
+    private static class SingleHolder {
+        private static final AppStack instance = new AppStack();
     }
 
 }
