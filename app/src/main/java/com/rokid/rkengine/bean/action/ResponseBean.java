@@ -21,6 +21,7 @@ public class ResponseBean extends BaseBean {
 
     public static final String SHOT_SCENE = "SCENE";
     public static final String SHOT_CUT = "CUT";
+    public static final String SHOT_SERVICE = "SERVICE";
 
     private String respId;
     /**

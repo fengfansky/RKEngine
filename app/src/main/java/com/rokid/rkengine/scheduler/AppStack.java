@@ -129,6 +129,7 @@ public class AppStack {
     public void clearAppStack() {
         Logger.d("clearAppStack");
         appStack.clear();
+        onDomainChanged("", "");
     }
 
     private static class SingleHolder {

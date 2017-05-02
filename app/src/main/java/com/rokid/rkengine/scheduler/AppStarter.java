@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.rokid.rkengine.bean.action.ActionResponse;
+import com.rokid.rkengine.bean.action.ResponseBean;
 import com.rokid.rkengine.bean.nlp.NLPBean;
 import com.rokid.rkengine.utils.Logger;
 
@@ -49,7 +50,25 @@ public class AppStarter {
             Logger.d("appInfo is null ");
             return;
         }
-        Logger.d("aidl startNativeApp ");
+
+        String shot = actionResponse.getResponse().getShot();
+        Logger.d("aidl startNativeApp " + shot);
+        switch (shot) {
+            case ResponseBean.SHOT_SCENE:
+                appInfo.type = AppInfo.TYPE_SCENE;
+                break;
+
+            case ResponseBean.SHOT_CUT:
+                appInfo.type = AppInfo.TYPE_CUT;
+                break;
+
+            case ResponseBean.SHOT_SERVICE:
+                appInfo.type = AppInfo.TYPE_SERVICE;
+                break;
+
+            default:
+                appInfo.type = AppInfo.TYPE_ANY;
+        }
 
         appManager.startApp(appInfo, nlpStr);
         appManager.storeNLP(appInfo.appId, nlpStr);
