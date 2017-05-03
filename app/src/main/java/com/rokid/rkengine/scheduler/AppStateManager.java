@@ -17,6 +17,8 @@ public class AppStateManager extends IAppStateCallback.Stub {
 
     private static final String TAG = "NativeAppClientCallback";
 
+    private static final String CLOUD_APPID = "841f3558-f3d4-43f6-911a-6f80b62b352d";
+
     AppStack appStack = AppStack.getInstance();
 
     @Override
@@ -81,6 +83,12 @@ public class AppStateManager extends IAppStateCallback.Stub {
             return;
         }
         Logger.d(TAG, "onStart " + appInfo.appId);
+        //NOTICE: avoid push cloud appInfo twice!
+        if (CLOUD_APPID.equals(appInfo.appId)) {
+            Logger.d("CloudAppInfo has pushed into stack,don't need push more !");
+            return;
+        }
+
         appStack.pushApp(appInfo);
     }
 

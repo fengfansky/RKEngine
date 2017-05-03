@@ -32,6 +32,11 @@ public class AppStack {
         }
     }
 
+    /**
+     * push native app
+     *
+     * @param newApp native app
+     */
     public void pushApp(AppInfo newApp) {
         if (newApp == null) {
             return;
@@ -47,18 +52,46 @@ public class AppStack {
                 Logger.d("lastApp is the same with newApp");
                 return;
             }
-            if (AppInfo.TYPE_CUT == lastApp.type) {
+            if (AppInfo.TYPE_SCENE == lastApp.type && AppInfo.TYPE_CUT == newApp.type) {
+                appStack.push(newApp);
+                onDomainChanged(newApp.appId, lastApp.appId);
+            } else {
+                appStack.pop();
                 appStack.push(newApp);
                 onDomainChanged(newApp.appId, null);
-            } else if (AppInfo.TYPE_SCENE == lastApp.type) {
-                if (AppInfo.TYPE_CUT == newApp.type) {
-                    appStack.push(newApp);
-                    onDomainChanged(newApp.appId, lastApp.appId);
-                } else if (AppInfo.TYPE_SCENE == newApp.type) {
-                    appStack.pop();
-                    appStack.push(newApp);
-                    onDomainChanged(newApp.appId, null);
-                }
+            }
+        }
+        Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
+    }
+
+
+    /**
+     * push cloudAppClient
+     *
+     * @param newApp cloud app
+     */
+    public void pushChangeableApp(AppInfo newApp) {
+        if (newApp == null) {
+            return;
+        }
+        if (appStack.isEmpty()) {
+            appStack.push(newApp);
+            onDomainChanged(newApp.appId, null);
+        } else {
+            AppInfo lastApp = appStack.peek();
+            Logger.d("appStack not empty , push CloudApp lastType is " + lastApp.type + " newAppType is " + newApp.type);
+            if (lastApp.appId.equals(newApp.appId)) {
+                lastApp.type = newApp.type;
+                return;
+            }
+
+            if (AppInfo.TYPE_SCENE == lastApp.type && AppInfo.TYPE_CUT == newApp.type) {
+                appStack.push(newApp);
+                onDomainChanged(newApp.appId, lastApp.appId);
+            } else {
+                appStack.pop();
+                appStack.push(newApp);
+                onDomainChanged(newApp.appId, null);
             }
         }
         Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
@@ -129,7 +162,7 @@ public class AppStack {
     public void clearAppStack() {
         Logger.d("clearAppStack");
         appStack.clear();
-        onDomainChanged("", "");
+        onDomainChanged(null, null);
     }
 
     private static class SingleHolder {

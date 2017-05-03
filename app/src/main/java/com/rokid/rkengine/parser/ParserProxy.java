@@ -10,12 +10,15 @@ import com.rokid.rkengine.bean.action.response.action.ActionBean;
 import com.rokid.rkengine.bean.action.response.action.media.MediaBean;
 import com.rokid.rkengine.bean.action.response.action.voice.VoiceBean;
 import com.rokid.rkengine.bean.nlp.NLPBean;
+import com.rokid.rkengine.scheduler.AppStack;
 import com.rokid.rkengine.scheduler.AppStarter;
 import com.rokid.rkengine.utils.CommonConfig;
 import com.rokid.rkengine.utils.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import rokid.rkengine.scheduler.AppInfo;
 
 /**
  * Created by fanfeng on 2017/4/16.
@@ -27,6 +30,8 @@ public class ParserProxy {
     private static final String KEY_COMMON_RESPONSE = "extra";
 
     private static final String INTENT_EXECUTE = "execute";
+
+    private AppStack appStack = AppStack.getInstance();
 
     public static ParserProxy getInstance() {
 
@@ -76,19 +81,24 @@ public class ParserProxy {
             slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
             nlp.setSlots(slots);
 
-            String shot = actionResponse.getResponse().getShot();
+            AppInfo appInfo = new AppInfo();
+            appInfo.appId = actionResponse.getAppId();
 
+            String shot = actionResponse.getResponse().getShot();
             switch (shot) {
                 case ResponseBean.SHOT_SCENE:
+                    appInfo.type = AppInfo.TYPE_SCENE;
                     appStarter.startCloudApp(context, CommonConfig.SCENE_DOMAIN, INTENT_EXECUTE, slots);
                     break;
 
                 case ResponseBean.SHOT_CUT:
+                    appInfo.type = AppInfo.TYPE_CUT;
                     appStarter.startCloudApp(context, CommonConfig.CUT_DOMAIN, INTENT_EXECUTE, slots);
                     break;
                 default:
                     Logger.d("unknow shot:  " + shot);
             }
+            appStack.pushChangeableApp(appInfo);
 
         } else {
             appStarter.startNativeApp(nlpStr, actionResponse);
