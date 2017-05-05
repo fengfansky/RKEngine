@@ -16,9 +16,9 @@ public class NLPBean extends BaseBean {
      */
     private boolean cloud;
     /**
-     * intent domain
+     * intent appId
      */
-    private String domain;
+    private String appId;
     /**
      * intent
      */
@@ -64,12 +64,12 @@ public class NLPBean extends BaseBean {
      */
     private String forwardContent;
 
-    public String getDomain() {
-        return domain;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getIntent() {

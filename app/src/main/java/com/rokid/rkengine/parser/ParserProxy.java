@@ -123,7 +123,7 @@ public class ParserProxy {
         }
 
         // check response domain
-        if (TextUtils.isEmpty(action.getResponse().getDomain())) {
+        if (TextUtils.isEmpty(action.getAppId())) {
             Logger.i("checkCloudAppAction: domain for response is invalid");
             return true;
         }

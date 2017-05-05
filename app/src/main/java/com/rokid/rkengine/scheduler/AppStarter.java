@@ -28,7 +28,7 @@ public class AppStarter {
         if (context == null)
             return;
         NLPBean nlpBean = new NLPBean();
-        nlpBean.setDomain(domain);
+        nlpBean.setAppId(domain);
         nlpBean.setIntent(intentType);
         nlpBean.setSlots(slots);
         String nlpStr = new Gson().toJson(nlpBean);
