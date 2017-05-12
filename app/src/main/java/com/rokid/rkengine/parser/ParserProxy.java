@@ -84,7 +84,7 @@ public class ParserProxy {
             AppInfo appInfo = new AppInfo();
             appInfo.appId = actionResponse.getAppId();
 
-            String shot = actionResponse.getResponse().getShot();
+            String shot = actionResponse.getResponse().getForm();
             switch (shot) {
                 case ResponseBean.SHOT_SCENE:
                     appInfo.type = AppInfo.TYPE_SCENE;
@@ -129,7 +129,7 @@ public class ParserProxy {
         }
 
         // check response shot
-        String shot = action.getResponse().getShot();
+        String shot = action.getResponse().getForm();
 
         if (TextUtils.isEmpty(shot)) {
             Logger.i("checkCloudAppAction: shot for response is invalid");

@@ -33,7 +33,7 @@ public class ResponseBean extends BaseBean {
      * indicates the application type for the domain related
      * SCENE or CUT
      */
-    private String shot;
+    private String form;
     private CardBean card;
 
     private ActionBean action;
@@ -55,12 +55,12 @@ public class ResponseBean extends BaseBean {
     }
 
 
-    public String getShot() {
-        return shot;
+    public String getForm() {
+        return form;
     }
 
-    public void setShot(String shot) {
-        this.shot = shot;
+    public void setForm(String form) {
+        this.form = form;
     }
 
     public CardBean getCard() {
@@ -84,7 +84,7 @@ public class ResponseBean extends BaseBean {
     }
 
     public boolean isShotValid() {
-        return !TextUtils.isEmpty(shot) && (SHOT_SCENE.equals(shot) || SHOT_CUT.equals(shot));
+        return !TextUtils.isEmpty(form) && (SHOT_SCENE.equals(form) || SHOT_CUT.equals(form));
     }
 
 }

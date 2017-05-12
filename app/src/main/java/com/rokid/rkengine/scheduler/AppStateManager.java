@@ -83,6 +83,10 @@ public class AppStateManager extends IAppStateCallback.Stub {
             return;
         }
         Logger.d(TAG, "onStart " + appInfo.appId);
+        if (appInfo.ignoreFromCDomain) {
+            Logger.d("ignoreFromCDomain don't push app");
+            return;
+        }
         //NOTICE: avoid push cloud appInfo twice!
         if (CLOUD_APPID.equals(appInfo.appId)) {
             Logger.d("CloudAppInfo has pushed into stack,don't need push more !");
