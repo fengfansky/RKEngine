@@ -10,6 +10,7 @@ import com.rokid.rkengine.scheduler.AppManagerImp;
 import com.rokid.rkengine.utils.Logger;
 
 import rokid.rkengine.IRKAppEngine;
+import rokid.rkengine.IRKAppEngineAppContextChangeCallback;
 import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
@@ -32,9 +33,16 @@ public class RkEngineService extends Service {
 
         @Override
         public void launch(String nlp, String asr, String action) throws RemoteException {
-            Logger.d("launch RKEngineService startParse nlp : " + nlp + " asr : " + asr + "action : " + action);
-            ParserProxy.getInstance().startParse(RkEngineService.this
-                    , nlp, asr, action);
+            Logger.d("launch RKEngineService startParse nlp : " + nlp);
+            Logger.d(" asr : " + asr);
+            Logger.d("action : " + action);
+            ParserProxy.getInstance().startParse(RkEngineService.this, nlp, asr, action);
+        }
+
+        @Override
+        public void setDeviceInfo(String deviceInfo) throws RemoteException {
+            Logger.d("setDeviceInfo deviceInfo : " + deviceInfo.toString() + " " + deviceInfo.length());
+            ParserProxy.getInstance().setDeviceInfo(deviceInfo);
         }
 
         @Override
@@ -54,6 +62,11 @@ public class RkEngineService extends Service {
                 Logger.d("setOnDomainChangedListener");
                 appManager.setOnDomainChangedListener(onDomainChangedListener);
             }
+        }
+
+        @Override
+        public void registerAppContextChangeCallback(IRKAppEngineAppContextChangeCallback irkAppEngineAppContextChangeCallback) throws RemoteException {
+
         }
 
     };

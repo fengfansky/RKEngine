@@ -32,6 +32,6 @@ android {
 
 
 dependencies {
-    provided files('libs/pebble_sdk.jar')
+    compile files('libs/rokid-framework.jar')
     compile files('libs/gson-2.4.jar');
 }

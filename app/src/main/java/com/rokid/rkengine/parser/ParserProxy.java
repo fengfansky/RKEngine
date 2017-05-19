@@ -29,9 +29,13 @@ public class ParserProxy {
 
     private static final String KEY_COMMON_RESPONSE = "extra";
 
+    private static final String DEVICE_INFO = "device";
+
     private static final String INTENT_EXECUTE = "execute";
 
     private AppStack appStack = AppStack.getInstance();
+
+    private String deviceInfo;
 
     public static ParserProxy getInstance() {
 
@@ -79,6 +83,7 @@ public class ParserProxy {
 
             final Map<String, String> slots = new HashMap<>();
             slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
+            slots.put(DEVICE_INFO, deviceInfo.toString());
             nlp.setSlots(slots);
 
             AppInfo appInfo = new AppInfo();
@@ -103,6 +108,10 @@ public class ParserProxy {
         } else {
             appStarter.startNativeApp(nlpStr, actionResponse);
         }
+    }
+
+    public void setDeviceInfo(String deviceInfo) {
+        this.deviceInfo = deviceInfo;
     }
 
     private boolean checkAction(ActionResponse action) {
