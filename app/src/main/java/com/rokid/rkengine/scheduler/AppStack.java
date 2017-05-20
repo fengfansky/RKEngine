@@ -15,6 +15,8 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class AppStack {
 
+    private static final String CLOUD_APPID = "841f3558-f3d4-43f6-911a-6f80b62b352d";
+
     private Stack<AppInfo> appStack = new Stack<>();
 
     private IRKAppEngineDomainChangeCallback onDomainChangedListener;
@@ -41,6 +43,16 @@ public class AppStack {
         if (newApp == null) {
             return;
         }
+
+        if (newApp.ignoreFromCDomain) {
+            Logger.d("ignoreFromCDomain don't push app");
+            return;
+        }
+        //NOTICE: avoid push cloud appInfo twice!
+        if (CLOUD_APPID.equals(newApp.appId)) {
+            Logger.d("CloudAppInfo has pushed into stack,don't need push more !");
+            return;
+        }
         if (appStack.empty()) {
             appStack.push(newApp);
             onDomainChanged(newApp.appId, null);
@@ -54,12 +66,11 @@ public class AppStack {
             }
             if (AppInfo.TYPE_SCENE == lastApp.type && AppInfo.TYPE_CUT == newApp.type) {
                 appStack.push(newApp);
-                onDomainChanged(newApp.appId, lastApp.appId);
             } else {
                 appStack.pop();
                 appStack.push(newApp);
-                onDomainChanged(newApp.appId, null);
             }
+            onDomainChanged(newApp.appId, lastApp.appId);
         }
         Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
     }
@@ -68,7 +79,7 @@ public class AppStack {
     /**
      * push cloudAppClient
      *
-     * @param newApp cloud app
+     * @param newApp cloud apps
      */
     public void pushChangeableApp(AppInfo newApp) {
         if (newApp == null) {
@@ -87,12 +98,11 @@ public class AppStack {
 
             if (AppInfo.TYPE_SCENE == lastApp.type && AppInfo.TYPE_CUT == newApp.type) {
                 appStack.push(newApp);
-                onDomainChanged(newApp.appId, lastApp.appId);
             } else {
                 appStack.pop();
                 appStack.push(newApp);
-                onDomainChanged(newApp.appId, null);
             }
+            onDomainChanged(newApp.appId, lastApp.appId);
         }
         Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
     }
@@ -104,19 +114,19 @@ public class AppStack {
         }
         if (!appInfo.appId.equals(appStack.peek().appId)) {
             Logger.d("newApp is not the same with lastApp, dot't pop app");
-            return appStack.peek();
+            return null;
         }
-        AppInfo currentApp = appStack.pop();
+        AppInfo lastApp = appStack.pop();
         Logger.d("popApp appStack size : " + appStack.size() + " top app is " + peekApp());
         if (onDomainChangedListener != null) {
-            AppInfo lastApp = appStack.peek();
-            if (lastApp != null) {
-                onDomainChanged(currentApp.appId, lastApp.appId);
+            AppInfo currApp = appStack.peek();
+            if (currApp != null) {
+                onDomainChanged(currApp.appId, lastApp.appId);
             } else {
-                onDomainChanged(currentApp.appId, null);
+                onDomainChanged(null, lastApp.appId);
             }
         }
-        return currentApp;
+        return lastApp;
     }
 
     public AppInfo peekApp() {
@@ -138,6 +148,7 @@ public class AppStack {
     }
 
     private void onDomainChanged(String currentDomain, String lastDomain) {
+        Logger.d("onDomainChanged current appId = " + currentDomain + " lastDomain = " + lastDomain);
         if (onDomainChangedListener != null) {
             try {
                 onDomainChangedListener.onDomainChange(currentDomain, lastDomain);
