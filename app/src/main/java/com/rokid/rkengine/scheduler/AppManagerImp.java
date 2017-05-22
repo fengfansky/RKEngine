@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import rokid.rkengine.IAppManagerProxy;
+import rokid.rkengine.IRKAppEngineAppContextChangeCallback;
 import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
@@ -23,13 +24,20 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class AppManagerImp implements IAppManager {
 
+    private IAppManagerProxy appManagerProxy;
+
+    private AppStateManager appStateManager;
+
+    private AppStack appStack = AppStack.getInstance();
+
+    private Context context;
+
+    private Map<String, String> nlpMaps = new ConcurrentHashMap<>();
+
     private static final String SERVICE_NAME = "com.rokid.runtime.openvoice.RKNativeAppClientService";
     private static final String PACKAGE_NAME = "com.rokid.runtime";
-    private IAppManagerProxy appManagerProxy;
-    private AppStateManager appStateManager;
-    private AppStack appStack = AppStack.getInstance();
-    private Context context;
-    private Map<String, String> nlpMaps = new ConcurrentHashMap<>();
+
+
     private ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -185,6 +193,12 @@ public class AppManagerImp implements IAppManager {
 
     private static class SingleHolder {
         private static final AppManagerImp instance = new AppManagerImp();
+    }
+
+    public void setOnAppContextChangeListener(IRKAppEngineAppContextChangeCallback callback) {
+        if (appStateManager != null) {
+            appStateManager.setOnAppContextChangeListener(callback);
+        }
     }
 
 }

@@ -65,7 +65,11 @@ public class RkEngineService extends Service {
         }
 
         @Override
-        public void registerAppContextChangeCallback(IRKAppEngineAppContextChangeCallback irkAppEngineAppContextChangeCallback) throws RemoteException {
+        public void registerAppContextChangeCallback(IRKAppEngineAppContextChangeCallback callback) throws RemoteException {
+            if (callback != null) {
+                Logger.d("setOnAppContextChangeListener");
+                appManager.setOnAppContextChangeListener(callback);
+            }
 
         }
 
