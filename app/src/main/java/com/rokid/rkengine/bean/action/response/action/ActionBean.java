@@ -29,6 +29,13 @@ public class ActionBean extends BaseBean {
      */
     public static final String TYPE_EXIT = "EXIT";
 
+    public static final String FORM_SCENE = "scene";
+
+    public static final String FORM_CUT = "cut";
+
+    /**
+     * 表明 action 协议版本，当前版本为: 2.0.0.
+     */
     private String version;
     /**
      * Indicates the type of current action
@@ -42,6 +49,24 @@ public class ActionBean extends BaseBean {
     private VoiceBean voice;
     private DisplayBean display;
     private MediaBean media;
+
+    /**
+     * 当前action的展现形式：scene、cut、service。scene的action会在被打断后压栈，cut的action会在被打    * 断后直接结束，service会在后台执行，但没有任何界面。该字段在技能创建时被确定，无法由cloud app更改。
+     */
+    private String form;
+
+    public String getForm() {
+        if (!TextUtils.isEmpty(form)) {
+            return form.toLowerCase();
+        }
+        return form;
+    }
+
+    public void setForm(String form) {
+        if (!TextUtils.isEmpty(form)) {
+            this.form = form.toLowerCase();
+        }
+    }
 
     public String getVersion() {
         return version;
@@ -105,6 +130,10 @@ public class ActionBean extends BaseBean {
 
     public boolean isDisplayValid() {
         return null != display && display.isValid();
+    }
+
+    public boolean isShotValid() {
+        return !TextUtils.isEmpty(form) && (FORM_SCENE.equalsIgnoreCase(form) || FORM_CUT.equalsIgnoreCase(form));
     }
 
 }
