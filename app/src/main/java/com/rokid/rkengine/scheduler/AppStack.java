@@ -119,11 +119,11 @@ public class AppStack {
         AppInfo lastApp = appStack.pop();
         Logger.d("popApp appStack size : " + appStack.size() + " top app is " + peekApp());
         if (onDomainChangedListener != null) {
-            AppInfo currApp = appStack.peek();
-            if (currApp != null) {
-                onDomainChanged(currApp.appId, lastApp.appId);
-            } else {
+            if (appStack.isEmpty()) {
                 onDomainChanged(null, lastApp.appId);
+            } else {
+                AppInfo currApp = appStack.peek();
+                onDomainChanged(currApp.appId, lastApp.appId);
             }
         }
         return lastApp;
