@@ -1,11 +1,9 @@
 package com.rokid.rkengine.scheduler;
 
 import android.os.RemoteException;
-
+import android.text.TextUtils;
 import com.rokid.rkengine.utils.Logger;
-
 import java.util.Stack;
-
 import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
@@ -59,7 +57,10 @@ public class AppStack {
         } else {
             AppInfo lastApp = appStack.peek();
             Logger.d("appStack not empty lastType is " + lastApp.type + " newAppType is " + newApp.type);
-
+            if (TextUtils.isEmpty(lastApp.appId)) {
+                Logger.d("lastApp appId is null !!!");
+                return;
+            }
             if (lastApp.appId.equals(newApp.appId)) {
                 Logger.d("lastApp is the same with newApp");
                 return;
@@ -91,6 +92,10 @@ public class AppStack {
         } else {
             AppInfo lastApp = appStack.peek();
             Logger.d("appStack not empty , push CloudApp lastType is " + lastApp.type + " newAppType is " + newApp.type);
+            if (TextUtils.isEmpty(lastApp.appId)) {
+                Logger.d("lastApp appId is null !!!");
+                return;
+            }
             if (lastApp.appId.equals(newApp.appId)) {
                 lastApp.type = newApp.type;
                 return;
@@ -110,6 +115,10 @@ public class AppStack {
     public AppInfo popApp(AppInfo appInfo) {
         if (appStack.empty() || appInfo == null || appStack.peek() == null) {
             Logger.d("appStack is empty or appInfo is null");
+            return null;
+        }
+        if (TextUtils.isEmpty(appInfo.appId)) {
+            Logger.d("appInfo appId is null !!!");
             return null;
         }
         if (!appInfo.appId.equals(appStack.peek().appId)) {

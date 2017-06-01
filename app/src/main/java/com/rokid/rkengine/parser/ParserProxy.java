@@ -101,8 +101,8 @@ public class ParserProxy {
                 return;
             }
 
-            String shot = action.getForm();
-            switch (shot) {
+            String form = action.getForm();
+            switch (form) {
                 case ActionBean.FORM_SCENE:
                     appInfo.type = AppInfo.TYPE_SCENE;
                     appStarter.startCloudApp(context, CommonConfig.SCENE_DOMAIN, INTENT_EXECUTE, slots);
@@ -113,7 +113,7 @@ public class ParserProxy {
                     appStarter.startCloudApp(context, CommonConfig.CUT_DOMAIN, INTENT_EXECUTE, slots);
                     break;
                 default:
-                    Logger.d("unknow shot:  " + shot);
+                    Logger.d("unknow form:  " + form);
             }
             appStack.pushChangeableApp(appInfo);
 
@@ -149,17 +149,17 @@ public class ParserProxy {
             return true;
         }
 
-        // check response shot
-        String shot = action.getResponse().getAction().getForm();
+        // check response form
+        String form = action.getResponse().getAction().getForm();
 
-        if (TextUtils.isEmpty(shot)) {
-            Logger.i("checkCloudAppAction: shot for response is invalid");
+        if (TextUtils.isEmpty(form)) {
+            Logger.i("checkCloudAppAction: form for response is invalid");
             return true;
         }
 
-        if (!shot.equals(ActionBean.FORM_CUT)
-                && !shot.equals(ActionBean.FORM_SCENE)) {
-            Logger.i("checkCloudAppAction: ignore for unknown shot type: " + shot);
+        if (!form.equals(ActionBean.FORM_CUT)
+                && !form.equals(ActionBean.FORM_SCENE)) {
+            Logger.i("checkCloudAppAction: ignore for unknown form type: " + form);
             return true;
         }
 
