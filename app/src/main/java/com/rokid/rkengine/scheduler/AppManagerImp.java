@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import com.rokid.rkengine.utils.Logger;
 
@@ -94,7 +95,7 @@ public class AppManagerImp implements IAppManager {
     public AppInfo queryAppInfoByID(String appId) {
         if (appManagerProxy == null)
             return null;
-        Logger.d("appManager queryAppInfo");
+        Logger.d("appManager queryAppInfo appId " + appId);
 
         try {
             return appManagerProxy.queryAppInfoByID(appId);
@@ -180,6 +181,10 @@ public class AppManagerImp implements IAppManager {
     }
 
     public void storeNLP(String key, String nlp) {
+        if (TextUtils.isEmpty(key)) {
+            Logger.d("key is null !");
+            return;
+        }
         nlpMaps.put(key, nlp);
     }
 

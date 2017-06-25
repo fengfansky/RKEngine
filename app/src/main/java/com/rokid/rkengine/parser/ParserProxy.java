@@ -1,24 +1,16 @@
 package com.rokid.rkengine.parser;
 
-import android.content.Context;
 import android.text.TextUtils;
-
 import com.rokid.rkengine.bean.CommonResponse;
 import com.rokid.rkengine.bean.action.ActionResponse;
-import com.rokid.rkengine.bean.action.ResponseBean;
 import com.rokid.rkengine.bean.action.response.action.ActionBean;
-import com.rokid.rkengine.bean.action.response.action.media.MediaBean;
-import com.rokid.rkengine.bean.action.response.action.voice.VoiceBean;
 import com.rokid.rkengine.bean.nlp.NLPBean;
-import com.rokid.rkengine.scheduler.AppStack;
 import com.rokid.rkengine.scheduler.AppStarter;
-import com.rokid.rkengine.utils.CommonConfig;
+import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import rokid.rkengine.scheduler.AppInfo;
 
 /**
  * Created by fanfeng on 2017/4/16.
@@ -26,23 +18,16 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class ParserProxy {
 
-
     private static final String KEY_COMMON_RESPONSE = "extra";
 
-    private static final String DEVICE_INFO = "device";
-
     private static final String INTENT_EXECUTE = "execute";
-
-    private AppStack appStack = AppStack.getInstance();
-
-    private String deviceInfo;
 
     public static ParserProxy getInstance() {
 
         return SingleHolder.instance;
     }
 
-    public void startParse(Context context, final String nlpStr, String asr, String actionStr) {
+    public void startParse(final String nlpStr, String asr, String actionStr) {
 
         if (TextUtils.isEmpty(nlpStr) || TextUtils.isEmpty(asr) || TextUtils.isEmpty(actionStr)) {
             Logger.e("str empty error!! action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
@@ -57,14 +42,20 @@ public class ParserProxy {
         NLPParser nlpParser = new NLPParser(nlpStr);
         NLPBean nlp = nlpParser.execute();
 
-
         if (actionResponse == null) {
-            Logger.d("actionResponse is null");
+            Logger.d("actionResponse is null !");
             return;
         }
 
         if (nlp == null) {
-            Logger.d("nlpBean is null");
+            Logger.d("nlpBean is null !");
+            return;
+        }
+
+        String cloudAppId = nlp.getAppId();
+
+        if (TextUtils.isEmpty(cloudAppId)) {
+            Logger.d(" appId is null !");
             return;
         }
 
@@ -73,8 +64,10 @@ public class ParserProxy {
 
         if (isCloudApp) {
 
-            if (checkAction(actionResponse))
+            if (actionResponse == null) {
+                Logger.d(" actionResponse is null !");
                 return;
+            }
 
             CommonResponse commonResponse = new CommonResponse();
             commonResponse.setAction(actionResponse);
@@ -83,165 +76,36 @@ public class ParserProxy {
 
             final Map<String, String> slots = new HashMap<>();
             slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
-            slots.put(DEVICE_INFO, deviceInfo.toString());
-            nlp.setSlots(slots);
 
-            AppInfo appInfo = new AppInfo();
-            appInfo.appId = actionResponse.getAppId();
+            nlp.setSlots(slots);
 
             ActionBean action = actionResponse.getResponse().getAction();
 
             if (action == null) {
-                Logger.d("action is null !!!");
+                Logger.d("action is null !");
                 return;
             }
 
             if (TextUtils.isEmpty(action.getForm())) {
-                Logger.d("form is empty");
+                Logger.d("form is null !");
                 return;
             }
 
             String form = action.getForm();
             switch (form) {
                 case ActionBean.FORM_SCENE:
-                    appInfo.type = AppInfo.TYPE_SCENE;
-                    appStarter.startCloudApp(context, CommonConfig.SCENE_DOMAIN, INTENT_EXECUTE, slots);
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, cloudAppId, INTENT_EXECUTE, slots);
                     break;
-
                 case ActionBean.FORM_CUT:
-                    appInfo.type = AppInfo.TYPE_CUT;
-                    appStarter.startCloudApp(context, CommonConfig.CUT_DOMAIN, INTENT_EXECUTE, slots);
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, cloudAppId, INTENT_EXECUTE, slots);
                     break;
                 default:
-                    Logger.d("unknow form:  " + form);
-            }
-            appStack.pushChangeableApp(appInfo);
-
-        } else {
-            appStarter.startNativeApp(nlpStr, actionResponse);
-        }
-    }
-
-    public void setDeviceInfo(String deviceInfo) {
-        this.deviceInfo = deviceInfo;
-    }
-
-    private boolean checkAction(ActionResponse action) {
-        if (action == null) {
-            Logger.i("checkCloudAppResponse: action is null");
-            return true;
-        }
-
-        if (!CommonConfig.PROTOCOL_VERSION.equals(action.getVersion())) {
-            Logger.i("checkCloudAppAction: given protocol version: " + action.getVersion() + " is invalid");
-            return true;
-        }
-
-        // check response
-        if (action.getResponse() == null) {
-            Logger.i("checkAction: response of action is null");
-            return true;
-        }
-
-        // check response domain
-        if (TextUtils.isEmpty(action.getAppId())) {
-            Logger.i("checkCloudAppAction: domain for response is invalid");
-            return true;
-        }
-
-        // check response form
-        String form = action.getResponse().getAction().getForm();
-
-        if (TextUtils.isEmpty(form)) {
-            Logger.i("checkCloudAppAction: form for response is invalid");
-            return true;
-        }
-
-        if (!form.equals(ActionBean.FORM_CUT)
-                && !form.equals(ActionBean.FORM_SCENE)) {
-            Logger.i("checkCloudAppAction: ignore for unknown form type: " + form);
-            return true;
-        }
-
-        /*  // TODO check response id
-        if (TextUtils.isEmpty(action.getResponse().getRespId())) {
-            Logger.i( "checkCloudAppAction: respId is invalid");
-            return true;
-        }*/
-
-        // check response type
-        String resType = action.getResponse().getResType();
-        if (TextUtils.isEmpty(resType)) {
-            Logger.i("checkCloudAppAction: resType is invalid");
-            return true;
-        }
-
-        if (!resType.equals(ResponseBean.TYPE_INTENT)
-                && !resType.equals(ResponseBean.TYPE_EVENT)) {
-            Logger.i("checkCloudAppAction: ignore for unknown resType: " + resType);
-            return true;
-        }
-
-        // check response action
-        ActionBean responseAction = action.getResponse().getAction();
-        if (responseAction == null) {
-            Logger.i("checkCloudAppAction: response action is null");
-            return true;
-        }
-
-        // check response action type
-        String responseActionType = responseAction.getType();
-        if (TextUtils.isEmpty(responseActionType)) {
-            Logger.i("checkCloudAppAction: response action type is invalid");
-            return true;
-        }
-
-        if (!responseActionType.equals(ActionBean.TYPE_NORMAL)
-                && !responseActionType.equals(ActionBean.TYPE_EXIT)) {
-            Logger.i("checkCloudAppAction: ignore unknown response action type: " + responseActionType);
-            return true;
-        }
-
-        // check response action elements
-        if (!checkActionElements(action.getResponse())) {
-            Logger.i("checkCloudAppAction: elements are invalid");
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Private method to check voice, media and display
-     */
-    private boolean checkActionElements(ResponseBean responseBean) {
-        ActionBean responseAction = responseBean.getAction();
-        String responseActionType = responseAction.getType();
-
-        MediaBean mediaBean = responseAction.getMedia();
-        VoiceBean voiceBean = responseAction.getVoice();
-
-        if (mediaBean == null
-                && voiceBean == null
-                && responseAction.getDisplay() == null) {
-            if (!responseActionType.equals(ActionBean.TYPE_EXIT)) {
-                Logger.i("checkCloudAppAction: media, voice and display cannot be null when response action type is not EXIT");
-                return false;
-            } else {
-                return true;
+                    Logger.d("unknow form :  " + form);
             }
         } else {
-            if (mediaBean != null && !mediaBean.isValid()) {
-                Logger.i("media is invalid");
-                return false;
-            }
-
-            if (voiceBean != null && !voiceBean.isValid()) {
-                Logger.i("voice is invalid");
-                return false;
-            }
+            String appId = actionResponse.getAppId();
+            appStarter.startNativeApp(nlpStr, appId);
         }
-
-        return true;
     }
 
     private static class SingleHolder {

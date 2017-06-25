@@ -1,12 +1,10 @@
 package com.rokid.rkengine.scheduler;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.rokid.rkengine.bean.action.ActionResponse;
 import com.rokid.rkengine.bean.nlp.NLPBean;
+import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
 
 import java.util.Map;
@@ -19,37 +17,33 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class AppStarter {
 
-    private static final String KEY_NLP = "nlp";
-    private static final String CLOUD_APP_PACKAGE_NAME = "com.rokid.cloudappclient";
-    private static final String CLOUD_APP_ACTIVITY_NAME = "com.rokid.cloudappclient.activity.CloudActivity";
     private AppManagerImp appManager = AppManagerImp.getInstance();
 
-    public void startCloudApp(Context context, String domain, String intentType, Map<String, String> slots) {
-        if (context == null)
-            return;
+    public void startCloudApp(String appId, String cloudAppId, String intentType, Map<String, String> slots) {
+
+        Logger.d(" startCloudApp appId:" + appId + " cloudAppId:" + cloudAppId + " intentType:" + intentType + " slots:" + slots.toString());
         NLPBean nlpBean = new NLPBean();
-        nlpBean.setAppId(domain);
+        nlpBean.setAppId(cloudAppId);
         nlpBean.setIntent(intentType);
+        nlpBean.setCloud(true);
         nlpBean.setSlots(slots);
         String nlpStr = new Gson().toJson(nlpBean);
 
-        Intent cloudAppIntent = new Intent();
-        ComponentName component = new ComponentName(CLOUD_APP_PACKAGE_NAME, CLOUD_APP_ACTIVITY_NAME);
-        cloudAppIntent.setComponent(component);
-        cloudAppIntent.setAction(Intent.ACTION_MAIN);
-        cloudAppIntent.putExtra(KEY_NLP, nlpStr);
-        cloudAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Logger.d("intent startCloudApp");
-        context.startActivity(cloudAppIntent);
+        startNativeApp(nlpStr, appId);
+        CloudAppCheckConfig.storeCloudAppId(appId, cloudAppId);
     }
 
-    public void startNativeApp(String nlpStr, ActionResponse actionResponse) {
-        final AppInfo appInfo = appManager.queryAppInfoByID(actionResponse.getAppId());
-        if (appInfo == null) {
-            Logger.d("appInfo is null ");
+
+    public void startNativeApp(String nlpStr, String appId) {
+        if (TextUtils.isEmpty(appId)) {
+            Logger.d("native appId is null!");
             return;
         }
-
+        final AppInfo appInfo = appManager.queryAppInfoByID(appId);
+        if (appInfo == null) {
+            Logger.d("native appInfo is null!");
+            return;
+        }
         appManager.startApp(appInfo, nlpStr);
         appManager.storeNLP(appInfo.appId, nlpStr);
     }
