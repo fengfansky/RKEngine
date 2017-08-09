@@ -29,7 +29,7 @@ public class ParserProxy {
 
     public void startParse(final String nlpStr, String asr, String actionStr) {
 
-        if (TextUtils.isEmpty(nlpStr) || TextUtils.isEmpty(asr) || TextUtils.isEmpty(actionStr)) {
+        if (TextUtils.isEmpty(nlpStr) || TextUtils.isEmpty(actionStr)) {
             Logger.e("str empty error!! action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
             return;
         }
@@ -78,6 +78,11 @@ public class ParserProxy {
             slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
 
             nlp.setSlots(slots);
+
+            if (actionResponse.getResponse() == null) {
+                Logger.d(" responseBean is null !");
+                return;
+            }
 
             ActionBean action = actionResponse.getResponse().getAction();
 

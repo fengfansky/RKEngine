@@ -60,14 +60,14 @@ public class AppStack {
         } else {
             AppInfo lastApp = appStack.peek();
             Logger.d("appStack not empty lastType is " + lastApp.type + " newAppType is " + newApp.type);
-            if (TextUtils.isEmpty(lastApp.appId)) {
+          /*  if (TextUtils.isEmpty(lastApp.appId)) {
                 Logger.d("lastApp appId is null !!!");
                 //remove it since it is null!
                 appStack.pop();
                 //push again
                 pushApp(newApp);
                 return;
-            }
+            }*/
 
             if (lastApp.appId.equals(newApp.appId)) {
                 Logger.d("lastApp is the same with newApp");

@@ -13,7 +13,6 @@ import com.rokid.rkengine.bean.action.BaseBean;
 public class VoiceItemBean extends BaseBean {
 
     private String tts;
-    private ConfirmBean confirm;
 
     public String getTts() {
         return tts;
@@ -23,20 +22,8 @@ public class VoiceItemBean extends BaseBean {
         this.tts = tts;
     }
 
-    public ConfirmBean getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(ConfirmBean confirm) {
-        this.confirm = confirm;
-    }
-
     public boolean isValid() {
-        return !TextUtils.isEmpty(tts) || isConfirmValid();
-    }
-
-    public boolean isConfirmValid() {
-        return null != confirm && confirm.isValid();
+        return !TextUtils.isEmpty(tts);
     }
 
 }

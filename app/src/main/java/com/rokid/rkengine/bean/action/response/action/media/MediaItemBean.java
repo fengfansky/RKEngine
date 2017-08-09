@@ -2,8 +2,6 @@ package com.rokid.rkengine.bean.action.response.action.media;
 
 import android.text.TextUtils;
 
-import com.rokid.rkengine.bean.action.BaseBean;
-
 /**
  * Defines the media item information which is required by the media player.
  * Here comes the definition.
@@ -11,7 +9,7 @@ import com.rokid.rkengine.bean.action.BaseBean;
  * Author: xupan.shi
  * Version: V0.1 2017/3/7
  */
-public class MediaItemBean extends BaseBean {
+public class MediaItemBean {
 
     public static final String TYPE_AUDIO = "AUDIO";
     public static final String TYPE_VIDEO = "VIDEO";

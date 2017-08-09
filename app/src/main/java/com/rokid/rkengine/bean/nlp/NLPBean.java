@@ -12,6 +12,10 @@ import java.util.Map;
 public class NLPBean extends BaseBean {
 
     /**
+     * asr content
+     */
+    private String asr;
+    /**
      * indicates the nlp is a cloud call
      */
     private boolean cloud;
@@ -63,6 +67,14 @@ public class NLPBean extends BaseBean {
      * forward content
      */
     private String forwardContent;
+
+    public String getAsr() {
+        return asr;
+    }
+
+    public void setAsr(String asr) {
+        this.asr = asr;
+    }
 
     public String getAppId() {
         return appId;

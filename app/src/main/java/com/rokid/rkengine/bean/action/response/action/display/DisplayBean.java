@@ -2,8 +2,6 @@ package com.rokid.rkengine.bean.action.response.action.display;
 
 import android.text.TextUtils;
 
-import com.rokid.rkengine.bean.action.BaseBean;
-
 /**
  * Display is the Graphic User Interface for CloudApps.
  * <p>

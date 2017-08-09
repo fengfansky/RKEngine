@@ -1,8 +1,8 @@
-package com.rokid.rkengine.bean.action.response.action.voice;
+package com.rokid.rkengine.bean.action.response.action.confirm;
 
 import android.text.TextUtils;
 
-import com.rokid.rkengine.bean.action.BaseBean;
+import com.rokid.rkengine.bean.action.response.action.voice.ConfirmAttributesBean;
 
 /**
  * Defines the Confirm content for confirm request
@@ -10,7 +10,7 @@ import com.rokid.rkengine.bean.action.BaseBean;
  * Author: xupan.shi
  * Version: V0.1 2017/3/9
  */
-public class ConfirmBean extends BaseBean {
+public class ConfirmBean {
 
     private String tts;
     private String confirmIntent;
