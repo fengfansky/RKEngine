@@ -11,16 +11,14 @@ import com.rokid.rkengine.bean.nlp.NLPBean;
 
 public class NLPParser extends BaseParser<String, NLPBean> {
 
-    NLPParser(String response) {
+    public NLPParser(String response) {
         super(response);
     }
 
     @Override
     boolean checkIegality() {
-        if (TextUtils.isEmpty(response))
-            return false;
+        return !TextUtils.isEmpty(response);
 
-        return true;
     }
 
     @Override

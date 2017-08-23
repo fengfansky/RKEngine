@@ -1,6 +1,6 @@
 package com.rokid.rkengine.bean.nlp;
 
-import com.rokid.rkengine.bean.action.BaseBean;
+import com.rokid.rkengine.bean.BaseBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +15,10 @@ public class NLPBean extends BaseBean {
      * asr content
      */
     private String asr;
+    /**
+     * action content
+     */
+    private String action;
     /**
      * indicates the nlp is a cloud call
      */
@@ -74,6 +78,14 @@ public class NLPBean extends BaseBean {
 
     public void setAsr(String asr) {
         this.asr = asr;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public String getAppId() {

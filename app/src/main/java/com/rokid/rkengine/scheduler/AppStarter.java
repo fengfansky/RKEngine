@@ -2,12 +2,8 @@ package com.rokid.rkengine.scheduler;
 
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.rokid.rkengine.bean.nlp.NLPBean;
 import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
-
-import java.util.Map;
 
 import rokid.rkengine.scheduler.AppInfo;
 
@@ -19,22 +15,15 @@ public class AppStarter {
 
     private AppManagerImp appManager = AppManagerImp.getInstance();
 
-    public void startCloudApp(String appId, String cloudAppId, String intentType, Map<String, String> slots) {
+    public void startCloudApp(String appId, String cloudAppId, String intentType, String extra) {
 
-        Logger.d(" startCloudApp appId:" + appId + " cloudAppId:" + cloudAppId + " intentType:" + intentType + " slots:" + slots.toString());
-        NLPBean nlpBean = new NLPBean();
-        nlpBean.setAppId(cloudAppId);
-        nlpBean.setIntent(intentType);
-        nlpBean.setCloud(true);
-        nlpBean.setSlots(slots);
-        String nlpStr = new Gson().toJson(nlpBean);
+        Logger.d(" startCloudApp appId:" + appId + " cloudAppId:" + cloudAppId + " intentType:" + intentType);
 
-        startNativeApp(nlpStr, appId);
+        startNativeApp(appId, extra);
         CloudAppCheckConfig.storeCloudAppId(appId, cloudAppId);
     }
 
-
-    public void startNativeApp(String nlpStr, String appId) {
+    public void startNativeApp(String appId, String nlpStr) {
         if (TextUtils.isEmpty(appId)) {
             Logger.d("native appId is null!");
             return;

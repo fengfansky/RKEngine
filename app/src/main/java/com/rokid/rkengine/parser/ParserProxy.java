@@ -1,16 +1,14 @@
 package com.rokid.rkengine.parser;
 
 import android.text.TextUtils;
-import com.rokid.rkengine.bean.CommonResponse;
-import com.rokid.rkengine.bean.action.ActionResponse;
-import com.rokid.rkengine.bean.action.response.action.ActionBean;
+
 import com.rokid.rkengine.bean.nlp.NLPBean;
 import com.rokid.rkengine.scheduler.AppStarter;
 import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by fanfeng on 2017/4/16.
@@ -18,9 +16,12 @@ import java.util.Map;
 
 public class ParserProxy {
 
-    private static final String KEY_COMMON_RESPONSE = "extra";
-
     private static final String INTENT_EXECUTE = "execute";
+    private AppStarter appStarter;
+
+    private static final String FORM_SCENE = "scene";
+
+    private static final String FORM_CUT = "cut";
 
     public static ParserProxy getInstance() {
 
@@ -36,80 +37,88 @@ public class ParserProxy {
         Logger.d("action  ---> " + actionStr);
         Logger.d("nlp -------> " + nlpStr);
         Logger.d("asr -------> " + asr);
-        ActionResponseParser actionResponseParser = new ActionResponseParser(actionStr);
-        ActionResponse actionResponse = actionResponseParser.execute();
 
         NLPParser nlpParser = new NLPParser(nlpStr);
-        NLPBean nlp = nlpParser.execute();
+        NLPBean nlpBean = nlpParser.execute();
 
-        if (actionResponse == null) {
-            Logger.d("actionResponse is null !");
+        if (nlpBean == null) {
+            Logger.d(" nlpBean is null , nlp invalid !");
             return;
         }
 
-        if (nlp == null) {
-            Logger.d("nlpBean is null !");
-            return;
-        }
+        nlpBean.setAction(actionStr);
 
-        String cloudAppId = nlp.getAppId();
+        appStarter = new AppStarter();
 
-        if (TextUtils.isEmpty(cloudAppId)) {
-            Logger.d(" appId is null !");
-            return;
-        }
+        String appId = nlpBean.getAppId();
 
-        boolean isCloudApp = nlp.isCloud();
-        AppStarter appStarter = new AppStarter();
+        if (nlpBean.isCloud()) {
 
-        if (isCloudApp) {
+            JSONObject actionObject = null;
 
-            if (actionResponse == null) {
-                Logger.d(" actionResponse is null !");
+            try {
+                actionObject = new JSONObject(actionStr);
+            } catch (JSONException e) {
+                Logger.e(" JSONParseException : parse action error !");
+                e.printStackTrace();
+            }
+
+            if (actionObject == null) {
+                Logger.d("actionObject is null !");
                 return;
             }
 
-            CommonResponse commonResponse = new CommonResponse();
-            commonResponse.setAction(actionResponse);
-            commonResponse.setNlp(nlp);
-            commonResponse.setAsr(asr);
+            JSONObject responseObj = null;
 
-            final Map<String, String> slots = new HashMap<>();
-            slots.put(KEY_COMMON_RESPONSE, commonResponse.toString());
+            try {
+                responseObj = (JSONObject) actionObject.get("response");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            nlp.setSlots(slots);
-
-            if (actionResponse.getResponse() == null) {
-                Logger.d(" responseBean is null !");
+            if (responseObj == null) {
+                Logger.d(" responseObj is null !");
                 return;
             }
 
-            ActionBean action = actionResponse.getResponse().getAction();
+            JSONObject actionObj = null;
 
-            if (action == null) {
-                Logger.d("action is null !");
+            try {
+                actionObj = (JSONObject) responseObj.get("action");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (actionObj == null) {
+                Logger.d(" actionObj is null !");
                 return;
             }
 
-            if (TextUtils.isEmpty(action.getForm())) {
+            String form = null;
+
+            try {
+                form = actionObj.getString("form");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (TextUtils.isEmpty(form)) {
                 Logger.d("form is null !");
                 return;
             }
 
-            String form = action.getForm();
             switch (form) {
-                case ActionBean.FORM_SCENE:
-                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, cloudAppId, INTENT_EXECUTE, slots);
+                case FORM_SCENE:
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, appId, INTENT_EXECUTE, nlpBean.toString());
                     break;
-                case ActionBean.FORM_CUT:
-                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, cloudAppId, INTENT_EXECUTE, slots);
+                case FORM_CUT:
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, appId, INTENT_EXECUTE, nlpBean.toString());
                     break;
                 default:
                     Logger.d("unknow form :  " + form);
             }
         } else {
-            String appId = actionResponse.getAppId();
-            appStarter.startNativeApp(nlpStr, appId);
+            appStarter.startNativeApp(appId, nlpStr);
         }
     }
 

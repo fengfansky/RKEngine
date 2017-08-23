@@ -1,4 +1,4 @@
-package com.rokid.rkengine.bean.action;
+package com.rokid.rkengine.bean;
 
 
 import com.google.gson.Gson;
