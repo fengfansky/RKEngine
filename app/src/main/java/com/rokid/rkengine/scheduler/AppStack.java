@@ -167,6 +167,8 @@ public class AppStack {
                     }
                     onDomainChanged(newCDomain, newSDomain);
                 } else {
+                    appStack.pop();
+                    appStack.push(newApp);
                     onDomainChanged(newCDomain, null);
                 }
             } else if (appStack.size() == 2) {

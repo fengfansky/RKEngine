@@ -2,10 +2,14 @@ package com.rokid.rkengine.scheduler;
 
 import java.util.ArrayList;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.rokid.rkengine.service.RkEngineService;
+import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
 
 import rokid.rkengine.IAppStateCallback;
@@ -111,7 +115,8 @@ public class AppStateManager extends IAppStateCallback.Stub {
                 _contextChangeCallback.onResume(appInfo);
             }
         }
-        
+
+        sendPackageNameToActivation(appInfo.appId);
     }
 
     @Override
@@ -133,6 +138,9 @@ public class AppStateManager extends IAppStateCallback.Stub {
             return;
         }
         Logger.d(TAG, "onStop " + appInfo.appId);
+        CloudAppCheckConfig.removeCloudAppId(appInfo.appId);
+        appStack.popApp(appInfo);
+
         for (IRKAppEngineAppContextChangeCallback _contextChangeCallback : mContextChangeCallbacks) {
             if (_contextChangeCallback != null) {
                 _contextChangeCallback.onStop(appInfo);
@@ -155,5 +163,16 @@ public class AppStateManager extends IAppStateCallback.Stub {
         }
         Logger.i("add callback " + callback.toString());
         mContextChangeCallbacks.add(callback);
+    }
+
+    private void sendPackageNameToActivation(String packageName) {
+        Intent intent = new Intent();
+        ComponentName compontent = new ComponentName("com.rokid.activation", "com.rokid.activation.service.CoreService");
+        intent.setComponent(compontent);
+        intent.putExtra("InputAction", "onAppStackChange");
+        Bundle bundle = new Bundle();
+        bundle.putString("topPackageName", packageName);
+        intent.putExtra("intent", bundle);
+        RkEngineService.getEngineService().startService(intent);
     }
 }

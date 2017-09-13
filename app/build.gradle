@@ -33,5 +33,4 @@ android {
 
 dependencies {
     compile files('libs/rokid.jar')
-    compile files('libs/gson-2.4.jar');
 }

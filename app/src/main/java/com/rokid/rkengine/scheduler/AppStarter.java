@@ -15,9 +15,9 @@ public class AppStarter {
 
     private AppManagerImp appManager = AppManagerImp.getInstance();
 
-    public void startCloudApp(String appId, String cloudAppId, String intentType, String extra) {
+    public void startCloudApp(String appId, String cloudAppId, String extra) {
 
-        Logger.d(" startCloudApp appId:" + appId + " cloudAppId:" + cloudAppId + " intentType:" + intentType);
+        Logger.d(" startCloudApp appId:" + appId + " cloudAppId:" + cloudAppId + " extra: " + extra);
 
         startNativeApp(appId, extra);
         CloudAppCheckConfig.storeCloudAppId(appId, cloudAppId);

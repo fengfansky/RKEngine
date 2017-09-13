@@ -19,17 +19,22 @@ public class RkEngineService extends Service {
 
     private AppManagerImp appManager;
 
+    private static RkEngineService engineService;
+
     public RkEngineService() {
 
     }
 
+    public static RkEngineService getEngineService() {
+        return engineService;
+    }
+
     @Override
     public void onCreate() {
-
+        engineService = this;
         appManager = AppManagerImp.getInstance();
         appManager.bindService(this);
         super.onCreate();
-
     }
 
     @Override

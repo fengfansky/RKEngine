@@ -39,12 +39,24 @@ public class CloudAppCheckConfig {
         cloudAppIdMaps.put(appId, cloudAppId);
     }
 
+    public static void removeCloudAppId(String cloudAppId) {
+        if (TextUtils.isEmpty(cloudAppId)) {
+            Logger.d("cloudAppId is null !");
+            return;
+        }
+        if (cloudAppId.equals(cloudAppIdMaps.get(CLOUD_SCENE_APP_PACKAGE_NAME))) {
+            cloudAppIdMaps.remove(CLOUD_SCENE_APP_PACKAGE_NAME);
+        } else if (cloudAppId.equals(cloudAppIdMaps.get(CLOUD_CUT_APP_PACKAGE_NAME))) {
+            cloudAppIdMaps.remove(CLOUD_CUT_APP_PACKAGE_NAME);
+        }
+    }
+
     public static String getCloudAppId(String appId) {
         return cloudAppIdMaps.get(appId);
     }
 
     public static String getFinalAppId(String appId) {
-        if (CloudAppCheckConfig.isCloudApp(appId)) {
+        if (isCloudApp(appId)) {
             Logger.d(" get CloudAppId :" + getCloudAppId(appId));
             return getCloudAppId(appId);
         }
