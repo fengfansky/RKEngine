@@ -93,7 +93,6 @@ public class AppStateManager extends IAppStateCallback.Stub {
         }
 
         Logger.d(TAG, "app " + appInfo.appId + " onPause");
-        appStack.popApp(appInfo);
         for (IRKAppEngineAppContextChangeCallback _contextChangeCallback : mContextChangeCallbacks) {
             if (_contextChangeCallback != null) {
                 _contextChangeCallback.onPause(appInfo);
@@ -139,7 +138,7 @@ public class AppStateManager extends IAppStateCallback.Stub {
         }
         Logger.d(TAG, "onStop " + appInfo.appId);
         CloudAppCheckConfig.removeCloudAppId(appInfo.appId);
-        appStack.popApp(appInfo);
+        AppStack.getInstance().popApp(appInfo);
 
         for (IRKAppEngineAppContextChangeCallback _contextChangeCallback : mContextChangeCallbacks) {
             if (_contextChangeCallback != null) {
@@ -149,7 +148,7 @@ public class AppStateManager extends IAppStateCallback.Stub {
     }
 
     public void setOnAppContextChangeListener(final IRKAppEngineAppContextChangeCallback callback) {
-        Logger.d(TAG, "setOnAppStateCallbackDeathListenr in AppStateManager");
+        Logger.d(TAG, "setOnAppStateCallbackDeathListener in AppStateManager");
         try {
             callback.asBinder().linkToDeath(new DeathRecipient() {
                 @Override

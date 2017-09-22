@@ -17,7 +17,7 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class AppStack {
 
-    private Stack<AppInfo> appStack = new Stack<AppInfo>();
+    private Stack<AppInfo> appStack = new Stack<>();
 
     private IRKAppEngineDomainChangeCallback onDomainChangedListener;
 
@@ -52,8 +52,8 @@ public class AppStack {
             return;
         }
 
-        String sdomain = null;
-        String cdomain = cloudAppId;
+        String sDomain = null;
+        String cDomain = cloudAppId;
         if (appStack.size() == 1) {
             AppInfo cAppInfo = appStack.get(0);
             //only handle top is cloud
@@ -63,22 +63,25 @@ public class AppStack {
 
             if (appId.equals(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME) &&
                     cAppInfo.appId.equals(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME)) {
-                sdomain = CloudAppCheckConfig.getCloudAppId(cAppInfo.appId);
+                sDomain = CloudAppCheckConfig.getCloudAppId(cAppInfo.appId);
             }
         } else if (appStack.size() == 2) {
             if (appId.equals(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME)) {
-                sdomain = null;
+                sDomain = null;
             } else {
                 AppInfo sAppInfo = appStack.get(1);
-                sdomain = sAppInfo.appId;
+                /*sDomain = sAppInfo.appId;
                 if (CloudAppCheckConfig.isCloudApp(sAppInfo.appId)) {
-                    sdomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
-                }
+                    sDomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
+                }*/
+                sDomain = CloudAppCheckConfig.getFinalAppId(sAppInfo.appId);
             }
         }
 
-        Logger.i("try push domain change with " + cdomain + ":" + sdomain);
-        onDomainChanged(cdomain, sdomain);
+        Logger.i("try push domain change with " + cDomain + ":" + sDomain);
+        onDomainChanged(cDomain, sDomain);
+        Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
+
     }
 
     /**
@@ -99,10 +102,7 @@ public class AppStack {
         Logger.d("newAppType is " + newApp.type + " newApp appId is " + newApp.appId);
         if (appStack.empty()) {
             appStack.push(newApp);
-            String shouldChangedDomainAppId = newApp.appId;
-            if (CloudAppCheckConfig.isCloudApp(newApp.appId)) {
-                shouldChangedDomainAppId = CloudAppCheckConfig.getCloudAppId(newApp.appId);
-            }
+            String shouldChangedDomainAppId = CloudAppCheckConfig.getFinalAppId(newApp.appId);
 
             if (!TextUtils.isEmpty(shouldChangedDomainAppId)) {
                 onDomainChanged(shouldChangedDomainAppId, null);
@@ -136,11 +136,12 @@ public class AppStack {
                                 Logger.e("wtf 1!");
                             }
                             AppInfo sAppInfo = appStack.get(1);
-                            String sdomain = sAppInfo.appId;
+                            /*String sDomain = sAppInfo.appId;
                             if (CloudAppCheckConfig.isCloudApp(sAppInfo.appId)) {
-                                sdomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
-                            }
-                            onDomainChanged(newCDomain, sdomain);
+                                sDomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
+                            }*/
+                            String sDomain = CloudAppCheckConfig.getFinalAppId(sAppInfo.appId);
+                            onDomainChanged(newCDomain, sDomain);
                         }
                     }
                 }
@@ -150,21 +151,24 @@ public class AppStack {
             String newCDomain = null;
             String newSDomain = null;
 
-            if (CloudAppCheckConfig.isCloudApp(newApp.appId)) {
+            /*if (CloudAppCheckConfig.isCloudApp(newApp.appId)) {
                 newCDomain = CloudAppCheckConfig.getCloudAppId(newApp.appId);
             } else {
                 newCDomain = newApp.appId;
-            }
+            }*/
+
+            newCDomain = CloudAppCheckConfig.getFinalAppId(newApp.appId);
 
             if (appStack.size() == 1) {
                 if (lastApp.type == AppInfo.TYPE_SCENE &&
                         newApp.type == AppInfo.TYPE_CUT) {
                     appStack.push(newApp);
-                    if (CloudAppCheckConfig.isCloudApp(lastApp.appId)) {
+                    /*if (CloudAppCheckConfig.isCloudApp(lastApp.appId)) {
                         newSDomain = CloudAppCheckConfig.getCloudAppId(lastApp.appId);
                     } else {
                         newSDomain = lastApp.appId;
-                    }
+                    }*/
+                    newSDomain = CloudAppCheckConfig.getFinalAppId(lastApp.appId);
                     onDomainChanged(newCDomain, newSDomain);
                 } else {
                     appStack.pop();
@@ -181,11 +185,12 @@ public class AppStack {
                     appStack.pop();
                     appStack.push(newApp);
 
-                    if (CloudAppCheckConfig.isCloudApp(stackApp.appId)) {
+                    /*if (CloudAppCheckConfig.isCloudApp(stackApp.appId)) {
                         newSDomain = CloudAppCheckConfig.getCloudAppId(stackApp.appId);
                     } else {
                         newSDomain = stackApp.appId;
-                    }
+                    }*/
+                    newSDomain = CloudAppCheckConfig.getFinalAppId(stackApp.appId);
                     onDomainChanged(newCDomain, newSDomain);
                 }
             }
@@ -193,23 +198,60 @@ public class AppStack {
         Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
     }
 
-    public synchronized AppInfo popApp(AppInfo appInfo) {
+    public synchronized boolean popApp( AppInfo appInfo ) {
         if (appStack.empty() || appInfo == null || appStack.peek() == null) {
             Logger.d("appStack is empty or appInfo is null");
-            return null;
+            return false;
         }
 
         if (TextUtils.isEmpty(appInfo.appId)) {
             Logger.d("appInfo appId is null !!!");
-            return null;
+            return false;
         }
 
-        if (!appInfo.appId.equals(appStack.peek().appId)) {
-            Logger.d("newApp is not the same with lastApp, dot't pop app");
-            return null;
+        AppInfo topApp = appStack.peek();
+
+        if (CloudAppCheckConfig.getFinalAppId(appInfo.appId).equals(CloudAppCheckConfig.getFinalAppId(topApp.appId))) {
+            Logger.d("target app is the same with topApp, so appStack pop app");
+            appStack.pop();
         }
 
-        AppInfo lastApp = appStack.peek();
+        Logger.d("popApp appStack size : " + appStack.size() + " top app is " + peekApp());
+
+        return true;
+    }
+
+    public synchronized AppInfo peekApp() {
+        if (appStack.empty())
+            return null;
+        return appStack.peek();
+    }
+
+    public synchronized boolean exitSessionDomain( String endSessionAppId ) {
+        if (appStack.empty() || TextUtils.isEmpty(endSessionAppId)) {
+            Logger.d("appStack is empty or endSessionAppId is null");
+            return false;
+        }
+
+        AppInfo topAppInfo = appStack.peek();
+
+        Logger.d("topAppInfo appId : " + topAppInfo.appId + " endSessionAppId : " + endSessionAppId);
+        //Notice: appId could be cloud app.
+        if (CloudAppCheckConfig.getFinalAppId(endSessionAppId).equals(CloudAppCheckConfig.getFinalAppId(topAppInfo.appId))) {
+            Logger.d("endSessionId is the same with topAppId, so appStack pop app");
+            appStack.pop();
+        }
+
+        Logger.d("exitSessionDomain appStack size : " + appStack.size() + " top app is " + peekApp());
+
+        if (appStack.size() == 2) {
+            onDomainChanged(CloudAppCheckConfig.getFinalAppId(appStack.get(1).appId), CloudAppCheckConfig.getFinalAppId(appStack.get(0).appId));
+        } else if (appStack.size() == 1) {
+            onDomainChanged(CloudAppCheckConfig.getFinalAppId(appStack.get(0).appId), null);
+        } else {
+            onDomainChanged(null, null);
+        }
+
         /*
         if (lastApp.type == AppInfo.TYPE_CUT) {
         	appStack.pop();
@@ -227,13 +269,9 @@ public class AppStack {
             }
         }
         */
-        return lastApp;
-    }
 
-    public synchronized AppInfo peekApp() {
-        if (appStack.empty())
-            return null;
-        return appStack.peek();
+        return true;
+
     }
 
     public synchronized AppInfo getLastApp() {
@@ -243,7 +281,7 @@ public class AppStack {
         } else {
             AppInfo currentApp = appStack.pop();
             AppInfo lastApp = appStack.peek();
-            onDomainChanged(currentApp.appId, lastApp.appId);
+            onDomainChanged(CloudAppCheckConfig.getFinalAppId(currentApp.appId), CloudAppCheckConfig.getFinalAppId(lastApp.appId));
             return lastApp;
         }
     }
@@ -267,6 +305,22 @@ public class AppStack {
         return appStack.isEmpty();
     }
 
+    public synchronized boolean isAppExitInStack( String appId ) {
+        if (appStack.isEmpty() || TextUtils.isEmpty(appId))
+            return false;
+        for (AppInfo stackAppInfo : appStack) {
+            if (appId.equals(stackAppInfo.appId)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public synchronized Stack<AppInfo> getAppStack() {
+        return appStack;
+    }
+
     public synchronized int getAppNum() {
         return appStack.size();
     }
@@ -279,38 +333,41 @@ public class AppStack {
 
     public synchronized List<String> queryDomainState() {
         ArrayList<String> lists = new ArrayList<String>();
-        String cdomain = null;
-        String sdomain = null;
+        String cDomain = null;
+        String sDomain = null;
 
         if (appStack.empty()) {
             return lists;
         }
 
         if (appStack.size() == 1) {
-            AppInfo capp = appStack.get(0);
-            cdomain = capp.appId;
-            if (CloudAppCheckConfig.isCloudApp(capp.appId)) {
-                cdomain = CloudAppCheckConfig.getCloudAppId(capp.appId);
-            }
+            AppInfo cAppInfo = appStack.get(0);
+            /*cDomain = cAppInfo.appId;
+            if (CloudAppCheckConfig.isCloudApp(cAppInfo.appId)) {
+                cDomain = CloudAppCheckConfig.getCloudAppId(cAppInfo.appId);
+            }*/
+            cDomain = CloudAppCheckConfig.getFinalAppId(cAppInfo.appId);
         } else if (appStack.size() == 2) {
-            AppInfo capp = appStack.get(0);
-            AppInfo sapp = appStack.get(1);
-            cdomain = capp.appId;
-            sdomain = sapp.appId;
-            if (CloudAppCheckConfig.isCloudApp(capp.appId)) {
-                cdomain = CloudAppCheckConfig.getCloudAppId(capp.appId);
-            }
+            AppInfo cAppInfo = appStack.get(0);
+            AppInfo sAppInfo = appStack.get(1);
+            /*cDomain = cAppInfo.appId;
+            if (CloudAppCheckConfig.isCloudApp(cAppInfo.appId)) {
+                cDomain = CloudAppCheckConfig.getCloudAppId(cAppInfo.appId);
+            }*/
+            cDomain = CloudAppCheckConfig.getFinalAppId(cAppInfo.appId);
+            /*sDomain = sapp.appId;
             if (CloudAppCheckConfig.isCloudApp(sapp.appId)) {
-                sdomain = CloudAppCheckConfig.getCloudAppId(sapp.appId);
-            }
+                sDomain = CloudAppCheckConfig.getCloudAppId(sapp.appId);
+            }*/
+            sDomain = CloudAppCheckConfig.getFinalAppId(sAppInfo.appId);
         }
 
-        if (!TextUtils.isEmpty(cdomain)) {
-            lists.add(cdomain);
+        if (!TextUtils.isEmpty(cDomain)) {
+            lists.add(cDomain);
         }
 
-        if (!TextUtils.isEmpty(sdomain)) {
-            lists.add(sdomain);
+        if (!TextUtils.isEmpty(sDomain)) {
+            lists.add(sDomain);
         }
         return lists;
     }

@@ -10,7 +10,9 @@ import android.text.TextUtils;
 
 import com.rokid.rkengine.utils.Logger;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
 import rokid.rkengine.IAppManagerProxy;
@@ -41,7 +43,7 @@ public class AppManagerImp implements IAppManager {
 
     private ServiceConnection conn = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
+        public void onServiceConnected( ComponentName name, IBinder service ) {
 
             Logger.d("onServiceConnected ");
             appManagerProxy = IAppManagerProxy.Stub.asInterface(service);
@@ -50,7 +52,7 @@ public class AppManagerImp implements IAppManager {
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onServiceDisconnected( ComponentName name ) {
 
         }
     };
@@ -64,7 +66,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void bindService(Context context) {
+    public void bindService( Context context ) {
         this.context = context;
         Intent binderIntent = new Intent();
         binderIntent.setComponent(new ComponentName(PACKAGE_NAME, SERVICE_NAME));
@@ -80,7 +82,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void setAppStateCallBack(AppStateManager callback) {
+    public void setAppStateCallBack( AppStateManager callback ) {
         if (appManagerProxy == null)
             return;
         Logger.d("appManager setAppStateCallBack");
@@ -92,7 +94,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public AppInfo queryAppInfoByID(String appId) {
+    public AppInfo queryAppInfoByID( String appId ) {
         if (appManagerProxy == null)
             return null;
         Logger.d("appManager queryAppInfo appId " + appId);
@@ -107,7 +109,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void startApp(AppInfo appInfo, String extra) {
+    public void startApp( AppInfo appInfo, String extra ) {
         Logger.d("appManager startApp appInfo : " + appInfo.appId + " extra : " + extra);
 
         if (appManagerProxy == null)
@@ -121,7 +123,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void pauseApp(AppInfo appInfo) {
+    public void pauseApp( AppInfo appInfo ) {
         if (appManagerProxy == null)
             return;
         try {
@@ -132,7 +134,7 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void resumeApp(AppInfo appInfo, String extra) {
+    public void resumeApp( AppInfo appInfo, String extra ) {
         if (appManagerProxy == null)
             return;
         try {
@@ -143,11 +145,17 @@ public class AppManagerImp implements IAppManager {
     }
 
     @Override
-    public void stopApp(AppInfo appInfo) {
+    public void stopApp( AppInfo appInfo ) {
         if (appManagerProxy == null)
             return;
+        if (appInfo == null) {
+            Logger.d("appInfo is null !");
+            return;
+        }
         try {
+            //调用此方法强制结束应用VM，不会回调onStop方法
             appManagerProxy.stopApp(appInfo);
+            AppStack.getInstance().exitSessionDomain(appInfo.appId);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -157,11 +165,24 @@ public class AppManagerImp implements IAppManager {
     public void stopAllApp() {
         if (appManagerProxy == null)
             return;
-        try {
-            appManagerProxy.stopAllApp();
-        } catch (RemoteException e) {
-            e.printStackTrace();
+
+        Stack<AppInfo> stack = AppStack.getInstance().getAppStack();
+
+        if (stack.isEmpty()) {
+            Logger.d(" stack is empty !");
+            return;
         }
+
+        for (AppInfo appInfo : stack) {
+            try {
+                appManagerProxy.stopApp(appInfo);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+        AppStack.getInstance().clearAppStack();
+
     }
 
     public int getAppNum() {
@@ -180,7 +201,7 @@ public class AppManagerImp implements IAppManager {
         appStack.clearAppStack();
     }
 
-    public void storeNLP(String key, String nlp) {
+    public void storeNLP( String key, String nlp ) {
         if (TextUtils.isEmpty(key)) {
             Logger.d("key is null !");
             return;
@@ -188,11 +209,11 @@ public class AppManagerImp implements IAppManager {
         nlpMaps.put(key, nlp);
     }
 
-    public String getNLP(String key) {
+    public String getNLP( String key ) {
         return nlpMaps.get(key);
     }
 
-    public void setOnDomainChangedListener(IRKAppEngineDomainChangeCallback listener) {
+    public void setOnDomainChangedListener( IRKAppEngineDomainChangeCallback listener ) {
         appStack.setOnDomainChangedListener(listener);
     }
 
@@ -200,10 +221,13 @@ public class AppManagerImp implements IAppManager {
         private static final AppManagerImp instance = new AppManagerImp();
     }
 
-    public void setOnAppContextChangeListener(IRKAppEngineAppContextChangeCallback callback) {
+    public void setOnAppContextChangeListener( IRKAppEngineAppContextChangeCallback callback ) {
         if (appStateManager != null) {
             appStateManager.setOnAppContextChangeListener(callback);
         }
     }
 
+    public List<String> queryDomainState() {
+        return appStack.queryDomainState();
+    }
 }

@@ -28,7 +28,7 @@ public class ParserProxy {
 
 	public static final String INTENT_EXIT = "ROKID.INTENT.EXIT";
 
-	public static final String INTENT_CLEAR = "ROKID.INTENT.CLEAR";
+	public static final String INTENT_CLEAR = "ROKID.SYSTEM.EXIT";
 
 	public static ParserProxy getInstance() {
 

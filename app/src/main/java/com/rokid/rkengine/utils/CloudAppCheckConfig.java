@@ -51,9 +51,16 @@ public class CloudAppCheckConfig {
         }
     }
 
+    /**
+     * appId -> cloud appId
+     *
+     * @param appId
+     * @return
+     */
     public static String getCloudAppId(String appId) {
         return cloudAppIdMaps.get(appId);
     }
+
 
     public static String getFinalAppId(String appId) {
         if (isCloudApp(appId)) {
