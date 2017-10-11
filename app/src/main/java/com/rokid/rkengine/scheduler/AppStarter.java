@@ -15,9 +15,10 @@ public class AppStarter {
 	private AppManagerImp appManager = AppManagerImp.getInstance();
 
 	/**
-	 * @param appId     cloudScene : CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME
-	 *                  cloudCut  :  CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME
-	 * @param actionStr
+	 *
+	 * @param appId  cloudScene : CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME
+	 *               cloudCut  :  CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME
+	 * @param actionStr action info
 	 */
 	public void startCloudApp( String appId, String actionStr ) {
 

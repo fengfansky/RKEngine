@@ -1,6 +1,6 @@
 package com.rokid.rkengine.confirm;
 
-import com.android.okhttp.Response;
+import com.squareup.okhttp.Response;
 import com.rokid.rkengine.service.RkEngineService;
 import com.rokid.rkengine.utils.Logger;
 

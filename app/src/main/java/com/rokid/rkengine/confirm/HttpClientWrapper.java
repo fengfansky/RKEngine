@@ -1,14 +1,11 @@
 package com.rokid.rkengine.confirm;
 
-import com.android.okhttp.*;
+import com.squareup.okhttp.*;
 import com.rokid.rkengine.utils.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-
-//import com.android.okhttp.*;
 
 
 /**

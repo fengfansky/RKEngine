@@ -1,10 +1,12 @@
 package com.rokid.rkengine.confirm;
 
+import android.os.IBinder;
 import android.text.TextUtils;
 
 import com.rokid.rkengine.md5.MD5Utils;
 import com.rokid.rkengine.utils.Logger;
 
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -48,7 +50,13 @@ public class ConfirmRequestConfig {
 
     public static Map<String, String> initDeviceInfo() {
         Map<String, String> deviceMap = null;
-        rokid.os.IRuntimeService runtime = rokid.os.IRuntimeService.Stub.asInterface(android.os.ServiceManager.getService("runtime_java"));
+        IBinder runtimeBinder = getRuntimeBinder();
+
+        if (runtimeBinder == null) {
+            Logger.d(" runtime binder is null ");
+            return null;
+        }
+        rokid.os.IRuntimeService runtime = rokid.os.IRuntimeService.Stub.asInterface(runtimeBinder);
         try {
             deviceMap = runtime.getPlatformAccountInfo();
         } catch (Exception e) {
@@ -96,6 +104,18 @@ public class ConfirmRequestConfig {
                 .replace("{", "").replace("}", "").replace(",", ";").replace(" ", "");
         Logger.i("authorization is " + authorization);
         return authorization;
+    }
+
+    private static IBinder getRuntimeBinder() {
+        IBinder runtimeBinder = null;
+        try {
+            Class<?> clazz = Class.forName("android.os.ServiceManager");
+            Method method = clazz.getMethod("getService", String.class);
+            runtimeBinder = (IBinder) method.invoke(null, "runtime_java");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return runtimeBinder;
     }
 
 }
