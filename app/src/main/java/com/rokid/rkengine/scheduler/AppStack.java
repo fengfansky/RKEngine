@@ -5,9 +5,11 @@ import android.text.TextUtils;
 
 import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
-import java.util.Stack;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 import rokid.rkengine.IRKAppEngineDomainChangeCallback;
 import rokid.rkengine.scheduler.AppInfo;
 
@@ -34,58 +36,8 @@ public class AppStack {
         }
     }
 
-    public synchronized void tryPushApp(String cloudAppId, String appId) {
-        if (!appId.equals(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME) &&
-                !appId.equals(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME)) {
-            return;
-        }
-
-        if (appStack.isEmpty()) {
-            Logger.i("try push with empty stack");
-            return;
-        }
-
-        AppInfo appInfo = appStack.peek();
-        if (TextUtils.isEmpty(appInfo.appId)) {
-            Logger.i("top is null");
-            appStack.pop();
-            return;
-        }
-
-        String sDomain = null;
-        String cDomain = cloudAppId;
-        if (appStack.size() == 1) {
-            AppInfo cAppInfo = appStack.get(0);
-            //only handle top is cloud
-            if (!CloudAppCheckConfig.isCloudApp(cAppInfo.appId)) {
-                return;
-            }
-
-            if (appId.equals(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME) &&
-                    cAppInfo.appId.equals(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME)) {
-                sDomain = CloudAppCheckConfig.getCloudAppId(cAppInfo.appId);
-            }
-        } else if (appStack.size() == 2) {
-            if (appId.equals(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME)) {
-                sDomain = null;
-            } else {
-                AppInfo sAppInfo = appStack.get(1);
-                /*sDomain = sAppInfo.appId;
-                if (CloudAppCheckConfig.isCloudApp(sAppInfo.appId)) {
-                    sDomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
-                }*/
-                sDomain = CloudAppCheckConfig.getFinalAppId(sAppInfo.appId);
-            }
-        }
-
-        Logger.i("try push domain change with " + cDomain + ":" + sDomain);
-        onDomainChanged(cDomain, sDomain);
-        Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
-
-    }
-
     /**
-     * push native app
+     * push app
      *
      * @param newApp native app
      */
@@ -111,11 +63,11 @@ public class AppStack {
             AppInfo lastApp = appStack.peek();
             Logger.d("appStack not empty lastType is " + lastApp.type + " lastApp appId is " + lastApp.appId + " ,  newAppType is " + newApp.type + " newApp appId is " + newApp.appId);
             if (TextUtils.isEmpty(lastApp.appId)) {
-                Logger.d("lastApp appId is null !!!");
                 //remove it since it is null!
                 appStack.pop();
                 //push again
                 pushApp(newApp);
+                Logger.d("push app error ! lastApp appId is null !!!");
                 return;
             }
 
@@ -133,10 +85,10 @@ public class AppStack {
                         } else if (appStack.size() == 2) {
                             if (newApp.type != AppInfo.TYPE_CUT ||
                                     lastApp.type != AppInfo.TYPE_CUT) {
-                                Logger.e("wtf 1!");
+                                Logger.e("fuck error , please check code !!!");
                             }
-                            AppInfo sAppInfo = appStack.get(1);
-                            /*String sDomain = sAppInfo.appId;
+                            AppInfo sAppInfo = appStack.get(0);
+                          /*  String sDomain = sAppInfo.appId;
                             if (CloudAppCheckConfig.isCloudApp(sAppInfo.appId)) {
                                 sDomain = CloudAppCheckConfig.getCloudAppId(sAppInfo.appId);
                             }*/
@@ -145,6 +97,8 @@ public class AppStack {
                         }
                     }
                 }
+                Logger.d("pushApp appStack size : " + appStack.size() + " top app is " + peekApp());
+
                 return;
             }
 
@@ -176,7 +130,7 @@ public class AppStack {
                     onDomainChanged(newCDomain, null);
                 }
             } else if (appStack.size() == 2) {
-                AppInfo stackApp = appStack.get(1);
+                AppInfo stackApp = appStack.get(0);
                 if (newApp.type == AppInfo.TYPE_SCENE) {
                     appStack.clear();
                     appStack.push(newApp);

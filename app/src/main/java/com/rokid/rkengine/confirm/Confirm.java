@@ -3,1936 +3,1936 @@ package com.rokid.rkengine.confirm;
 // source: Confirm.proto
 
 public final class Confirm {
-    private Confirm() {
+  private Confirm() {
+  }
+
+  public static void registerAllExtensions(
+          com.google.protobuf.ExtensionRegistry registry ) {
+  }
+
+  public interface SetConfirmRequestOrBuilder extends
+          // @@protoc_insertion_point(interface_extends:SetConfirmRequest)
+          com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    boolean hasAppId();
+
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    String getAppId();
+
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    com.google.protobuf.ByteString
+    getAppIdBytes();
+
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    boolean hasConfirmIntent();
+
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    String getConfirmIntent();
+
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getConfirmIntentBytes();
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    boolean hasConfirmSlot();
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    String getConfirmSlot();
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    com.google.protobuf.ByteString
+    getConfirmSlotBytes();
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+    getConfirmOptionsList();
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    int getConfirmOptionsCount();
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    String getConfirmOptions( int index );
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    com.google.protobuf.ByteString
+    getConfirmOptionsBytes( int index );
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    boolean hasAttributes();
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    String getAttributes();
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    com.google.protobuf.ByteString
+    getAttributesBytes();
+  }
+
+  /**
+   * Protobuf type {@code SetConfirmRequest}
+   */
+  public static final class SetConfirmRequest extends
+          com.google.protobuf.GeneratedMessage implements
+          // @@protoc_insertion_point(message_implements:SetConfirmRequest)
+          SetConfirmRequestOrBuilder {
+    // Use SetConfirmRequest.newBuilder() to construct.
+    private SetConfirmRequest( com.google.protobuf.GeneratedMessage.Builder<?> builder ) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
 
-    public static void registerAllExtensions(
-            com.google.protobuf.ExtensionRegistry registry ) {
+    private SetConfirmRequest( boolean noInit ) {
+      this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
 
-    public interface SetConfirmRequestOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:SetConfirmRequest)
-            com.google.protobuf.MessageOrBuilder {
+    private static final SetConfirmRequest defaultInstance;
 
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        boolean hasAppId();
+    public static SetConfirmRequest getDefaultInstance() {
+      return defaultInstance;
+    }
 
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        String getAppId();
+    public SetConfirmRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
 
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        com.google.protobuf.ByteString
-        getAppIdBytes();
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
 
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        boolean hasConfirmIntent();
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
 
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        String getConfirmIntent();
+    private SetConfirmRequest(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                      extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              appId_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              confirmIntent_ = bs;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              confirmSlot_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                confirmOptions_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              confirmOptions_.add(bs);
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              attributes_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          confirmOptions_ = confirmOptions_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
 
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        com.google.protobuf.ByteString
-        getConfirmIntentBytes();
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+      return Confirm.internal_static_SetConfirmRequest_descriptor;
+    }
 
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        boolean hasConfirmSlot();
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return Confirm.internal_static_SetConfirmRequest_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      Confirm.SetConfirmRequest.class, Confirm.SetConfirmRequest.Builder.class);
+    }
 
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        String getConfirmSlot();
+    public static com.google.protobuf.Parser<SetConfirmRequest> PARSER =
+            new com.google.protobuf.AbstractParser<SetConfirmRequest>() {
+              public SetConfirmRequest parsePartialFrom(
+                      com.google.protobuf.CodedInputStream input,
+                      com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+                      throws com.google.protobuf.InvalidProtocolBufferException {
+                return new SetConfirmRequest(input, extensionRegistry);
+              }
+            };
 
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        com.google.protobuf.ByteString
-        getConfirmSlotBytes();
+    @Override
+    public com.google.protobuf.Parser<SetConfirmRequest> getParserForType() {
+      return PARSER;
+    }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        com.google.protobuf.ProtocolStringList
-        getConfirmOptionsList();
+    private int bitField0_;
+    public static final int APPID_FIELD_NUMBER = 1;
+    private Object appId_;
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        int getConfirmOptionsCount();
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    public boolean hasAppId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        String getConfirmOptions( int index );
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    public String getAppId() {
+      Object ref = appId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          appId_ = s;
+        }
+        return s;
+      }
+    }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        com.google.protobuf.ByteString
-        getConfirmOptionsBytes( int index );
+    /**
+     * <code>required string appId = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+    getAppIdBytes() {
+      Object ref = appId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        appId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
 
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        boolean hasAttributes();
+    public static final int CONFIRMINTENT_FIELD_NUMBER = 2;
+    private Object confirmIntent_;
 
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        String getAttributes();
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    public boolean hasConfirmIntent() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
 
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        com.google.protobuf.ByteString
-        getAttributesBytes();
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    public String getConfirmIntent() {
+      Object ref = confirmIntent_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          confirmIntent_ = s;
+        }
+        return s;
+      }
+    }
+
+    /**
+     * <code>required string confirmIntent = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+    getConfirmIntentBytes() {
+      Object ref = confirmIntent_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        confirmIntent_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONFIRMSLOT_FIELD_NUMBER = 3;
+    private Object confirmSlot_;
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    public boolean hasConfirmSlot() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    public String getConfirmSlot() {
+      Object ref = confirmSlot_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          confirmSlot_ = s;
+        }
+        return s;
+      }
+    }
+
+    /**
+     * <code>required string confirmSlot = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+    getConfirmSlotBytes() {
+      Object ref = confirmSlot_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        confirmSlot_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONFIRMOPTIONS_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList confirmOptions_;
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+    getConfirmOptionsList() {
+      return confirmOptions_;
+    }
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    public int getConfirmOptionsCount() {
+      return confirmOptions_.size();
+    }
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    public String getConfirmOptions( int index ) {
+      return confirmOptions_.get(index);
+    }
+
+    /**
+     * <code>repeated string confirmOptions = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+    getConfirmOptionsBytes( int index ) {
+      return confirmOptions_.getByteString(index);
+    }
+
+    public static final int ATTRIBUTES_FIELD_NUMBER = 5;
+    private Object attributes_;
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    public boolean hasAttributes() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    public String getAttributes() {
+      Object ref = attributes_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          attributes_ = s;
+        }
+        return s;
+      }
+    }
+
+    /**
+     * <code>required string attributes = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+    getAttributesBytes() {
+      Object ref = attributes_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        attributes_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      appId_ = "";
+      confirmIntent_ = "";
+      confirmSlot_ = "";
+      confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      attributes_ = "";
+    }
+
+    private byte memoizedIsInitialized = -1;
+
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasAppId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasConfirmIntent()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasConfirmSlot()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAttributes()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo( com.google.protobuf.CodedOutputStream output )
+            throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getAppIdBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getConfirmIntentBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getConfirmSlotBytes());
+      }
+      for (int i = 0; i < confirmOptions_.size(); i++) {
+        output.writeBytes(4, confirmOptions_.getByteString(i));
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(5, getAttributesBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(1, getAppIdBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(2, getConfirmIntentBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(3, getConfirmSlotBytes());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < confirmOptions_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+                  .computeBytesSizeNoTag(confirmOptions_.getByteString(i));
+        }
+        size += dataSize;
+        size += 1 * getConfirmOptionsList().size();
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(5, getAttributesBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+
+    @Override
+    protected Object writeReplace()
+            throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            com.google.protobuf.ByteString data )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom( byte[] data )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom( java.io.InputStream input )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmRequest parseDelimitedFrom( java.io.InputStream input )
+            throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+
+    public static Confirm.SetConfirmRequest parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            com.google.protobuf.CodedInputStream input )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+
+    public static Confirm.SetConfirmRequest parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+      return Builder.create();
+    }
+
+    public Builder newBuilderForType() {
+      return newBuilder();
+    }
+
+    public static Builder newBuilder( Confirm.SetConfirmRequest prototype ) {
+      return newBuilder().mergeFrom(prototype);
+    }
+
+    public Builder toBuilder() {
+      return newBuilder(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent ) {
+      Builder builder = new Builder(parent);
+      return builder;
     }
 
     /**
      * Protobuf type {@code SetConfirmRequest}
      */
-    public static final class SetConfirmRequest extends
-            com.google.protobuf.GeneratedMessage implements
-            // @@protoc_insertion_point(message_implements:SetConfirmRequest)
-            SetConfirmRequestOrBuilder {
-        // Use SetConfirmRequest.newBuilder() to construct.
-        private SetConfirmRequest( com.google.protobuf.GeneratedMessage.Builder<?> builder ) {
-            super(builder);
-            this.unknownFields = builder.getUnknownFields();
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:SetConfirmRequest)
+            Confirm.SetConfirmRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+      getDescriptor() {
+        return Confirm.internal_static_SetConfirmRequest_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return Confirm.internal_static_SetConfirmRequest_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        Confirm.SetConfirmRequest.class, Confirm.SetConfirmRequest.Builder.class);
+      }
+
+      // Construct using Confirm.SetConfirmRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+              com.google.protobuf.GeneratedMessage.BuilderParent parent ) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
+      }
 
-        private SetConfirmRequest( boolean noInit ) {
-            this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        appId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        confirmIntent_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        confirmSlot_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        attributes_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+      getDescriptorForType() {
+        return Confirm.internal_static_SetConfirmRequest_descriptor;
+      }
+
+      public Confirm.SetConfirmRequest getDefaultInstanceForType() {
+        return Confirm.SetConfirmRequest.getDefaultInstance();
+      }
+
+      public Confirm.SetConfirmRequest build() {
+        Confirm.SetConfirmRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
         }
+        return result;
+      }
 
-        private static final SetConfirmRequest defaultInstance;
-
-        public static SetConfirmRequest getDefaultInstance() {
-            return defaultInstance;
+      public Confirm.SetConfirmRequest buildPartial() {
+        Confirm.SetConfirmRequest result = new Confirm.SetConfirmRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-
-        public SetConfirmRequest getDefaultInstanceForType() {
-            return defaultInstance;
+        result.appId_ = appId_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
         }
-
-        private final com.google.protobuf.UnknownFieldSet unknownFields;
-
-        @Override
-        public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-            return this.unknownFields;
+        result.confirmIntent_ = confirmIntent_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
         }
-
-        private SetConfirmRequest(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            initFields();
-            int mutable_bitField0_ = 0;
-            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-                    com.google.protobuf.UnknownFieldSet.newBuilder();
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        default: {
-                            if (!parseUnknownField(input, unknownFields,
-                                    extensionRegistry, tag)) {
-                                done = true;
-                            }
-                            break;
-                        }
-                        case 10: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            bitField0_ |= 0x00000001;
-                            appId_ = bs;
-                            break;
-                        }
-                        case 18: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            bitField0_ |= 0x00000002;
-                            confirmIntent_ = bs;
-                            break;
-                        }
-                        case 26: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            bitField0_ |= 0x00000004;
-                            confirmSlot_ = bs;
-                            break;
-                        }
-                        case 34: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                                confirmOptions_ = new com.google.protobuf.LazyStringArrayList();
-                                mutable_bitField0_ |= 0x00000008;
-                            }
-                            confirmOptions_.add(bs);
-                            break;
-                        }
-                        case 42: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            bitField0_ |= 0x00000008;
-                            attributes_ = bs;
-                            break;
-                        }
-                    }
-                }
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(this);
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(
-                        e.getMessage()).setUnfinishedMessage(this);
-            } finally {
-                if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                    confirmOptions_ = confirmOptions_.getUnmodifiableView();
-                }
-                this.unknownFields = unknownFields.build();
-                makeExtensionsImmutable();
-            }
+        result.confirmSlot_ = confirmSlot_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          confirmOptions_ = confirmOptions_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
         }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return Confirm.internal_static_SetConfirmRequest_descriptor;
+        result.confirmOptions_ = confirmOptions_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000008;
         }
+        result.attributes_ = attributes_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
 
-        protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return Confirm.internal_static_SetConfirmRequest_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            SetConfirmRequest.class, Builder.class);
+      public Builder mergeFrom( com.google.protobuf.Message other ) {
+        if (other instanceof Confirm.SetConfirmRequest) {
+          return mergeFrom((Confirm.SetConfirmRequest) other);
+        } else {
+          super.mergeFrom(other);
+          return this;
         }
+      }
 
-        public static com.google.protobuf.Parser<SetConfirmRequest> PARSER =
-                new com.google.protobuf.AbstractParser<SetConfirmRequest>() {
-                    public SetConfirmRequest parsePartialFrom(
-                            com.google.protobuf.CodedInputStream input,
-                            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                            throws com.google.protobuf.InvalidProtocolBufferException {
-                        return new SetConfirmRequest(input, extensionRegistry);
-                    }
-                };
-
-        @Override
-        public com.google.protobuf.Parser<SetConfirmRequest> getParserForType() {
-            return PARSER;
+      public Builder mergeFrom( Confirm.SetConfirmRequest other ) {
+        if (other == Confirm.SetConfirmRequest.getDefaultInstance()) return this;
+        if (other.hasAppId()) {
+          bitField0_ |= 0x00000001;
+          appId_ = other.appId_;
+          onChanged();
         }
-
-        private int bitField0_;
-        public static final int APPID_FIELD_NUMBER = 1;
-        private Object appId_;
-
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        public boolean hasAppId() {
-            return ((bitField0_ & 0x00000001) == 0x00000001);
+        if (other.hasConfirmIntent()) {
+          bitField0_ |= 0x00000002;
+          confirmIntent_ = other.confirmIntent_;
+          onChanged();
         }
-
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        public String getAppId() {
-            Object ref = appId_;
-            if (ref instanceof String) {
-                return (String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                String s = bs.toStringUtf8();
-                if (bs.isValidUtf8()) {
-                    appId_ = s;
-                }
-                return s;
-            }
+        if (other.hasConfirmSlot()) {
+          bitField0_ |= 0x00000004;
+          confirmSlot_ = other.confirmSlot_;
+          onChanged();
         }
-
-        /**
-         * <code>required string appId = 1;</code>
-         */
-        public com.google.protobuf.ByteString
-        getAppIdBytes() {
-            Object ref = appId_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (String) ref);
-                appId_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+        if (!other.confirmOptions_.isEmpty()) {
+          if (confirmOptions_.isEmpty()) {
+            confirmOptions_ = other.confirmOptions_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureConfirmOptionsIsMutable();
+            confirmOptions_.addAll(other.confirmOptions_);
+          }
+          onChanged();
         }
-
-        public static final int CONFIRMINTENT_FIELD_NUMBER = 2;
-        private Object confirmIntent_;
-
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        public boolean hasConfirmIntent() {
-            return ((bitField0_ & 0x00000002) == 0x00000002);
+        if (other.hasAttributes()) {
+          bitField0_ |= 0x00000010;
+          attributes_ = other.attributes_;
+          onChanged();
         }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
 
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        public String getConfirmIntent() {
-            Object ref = confirmIntent_;
-            if (ref instanceof String) {
-                return (String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                String s = bs.toStringUtf8();
-                if (bs.isValidUtf8()) {
-                    confirmIntent_ = s;
-                }
-                return s;
-            }
+      public final boolean isInitialized() {
+        if (!hasAppId()) {
+
+          return false;
         }
+        if (!hasConfirmIntent()) {
 
-        /**
-         * <code>required string confirmIntent = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-        getConfirmIntentBytes() {
-            Object ref = confirmIntent_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (String) ref);
-                confirmIntent_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+          return false;
         }
+        if (!hasConfirmSlot()) {
 
-        public static final int CONFIRMSLOT_FIELD_NUMBER = 3;
-        private Object confirmSlot_;
-
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        public boolean hasConfirmSlot() {
-            return ((bitField0_ & 0x00000004) == 0x00000004);
+          return false;
         }
+        return hasAttributes();
+      }
 
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        public String getConfirmSlot() {
-            Object ref = confirmSlot_;
-            if (ref instanceof String) {
-                return (String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                String s = bs.toStringUtf8();
-                if (bs.isValidUtf8()) {
-                    confirmSlot_ = s;
-                }
-                return s;
-            }
+      public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+              throws java.io.IOException {
+        Confirm.SetConfirmRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (Confirm.SetConfirmRequest) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
         }
+        return this;
+      }
 
-        /**
-         * <code>required string confirmSlot = 3;</code>
-         */
-        public com.google.protobuf.ByteString
-        getConfirmSlotBytes() {
-            Object ref = confirmSlot_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (String) ref);
-                confirmSlot_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+      private int bitField0_;
+
+      private Object appId_ = "";
+
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public boolean hasAppId() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public String getAppId() {
+        Object ref = appId_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            appId_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
         }
+      }
 
-        public static final int CONFIRMOPTIONS_FIELD_NUMBER = 4;
-        private com.google.protobuf.LazyStringList confirmOptions_;
-
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        public com.google.protobuf.ProtocolStringList
-        getConfirmOptionsList() {
-            return confirmOptions_;
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+      getAppIdBytes() {
+        Object ref = appId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          appId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        public int getConfirmOptionsCount() {
-            return confirmOptions_.size();
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public Builder setAppId(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000001;
+        appId_ = value;
+        onChanged();
+        return this;
+      }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        public String getConfirmOptions( int index ) {
-            return confirmOptions_.get(index);
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public Builder clearAppId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        appId_ = getDefaultInstance().getAppId();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>required string appId = 1;</code>
+       */
+      public Builder setAppIdBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000001;
+        appId_ = value;
+        onChanged();
+        return this;
+      }
 
-        /**
-         * <code>repeated string confirmOptions = 4;</code>
-         */
-        public com.google.protobuf.ByteString
-        getConfirmOptionsBytes( int index ) {
-            return confirmOptions_.getByteString(index);
+      private Object confirmIntent_ = "";
+
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public boolean hasConfirmIntent() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public String getConfirmIntent() {
+        Object ref = confirmIntent_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            confirmIntent_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
         }
+      }
 
-        public static final int ATTRIBUTES_FIELD_NUMBER = 5;
-        private Object attributes_;
-
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        public boolean hasAttributes() {
-            return ((bitField0_ & 0x00000008) == 0x00000008);
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+      getConfirmIntentBytes() {
+        Object ref = confirmIntent_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          confirmIntent_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        public String getAttributes() {
-            Object ref = attributes_;
-            if (ref instanceof String) {
-                return (String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                String s = bs.toStringUtf8();
-                if (bs.isValidUtf8()) {
-                    attributes_ = s;
-                }
-                return s;
-            }
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public Builder setConfirmIntent(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000002;
+        confirmIntent_ = value;
+        onChanged();
+        return this;
+      }
 
-        /**
-         * <code>required string attributes = 5;</code>
-         */
-        public com.google.protobuf.ByteString
-        getAttributesBytes() {
-            Object ref = attributes_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (String) ref);
-                attributes_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public Builder clearConfirmIntent() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        confirmIntent_ = getDefaultInstance().getConfirmIntent();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>required string confirmIntent = 2;</code>
+       */
+      public Builder setConfirmIntentBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000002;
+        confirmIntent_ = value;
+        onChanged();
+        return this;
+      }
 
-        private void initFields() {
-            appId_ = "";
-            confirmIntent_ = "";
-            confirmSlot_ = "";
-            confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-            attributes_ = "";
+      private Object confirmSlot_ = "";
+
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public boolean hasConfirmSlot() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public String getConfirmSlot() {
+        Object ref = confirmSlot_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            confirmSlot_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
         }
+      }
 
-        private byte memoizedIsInitialized = -1;
-
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized == 1) return true;
-            if (isInitialized == 0) return false;
-
-            if (!hasAppId()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            if (!hasConfirmIntent()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            if (!hasConfirmSlot()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            if (!hasAttributes()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            memoizedIsInitialized = 1;
-            return true;
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+      getConfirmSlotBytes() {
+        Object ref = confirmSlot_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          confirmSlot_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        public void writeTo( com.google.protobuf.CodedOutputStream output )
-                throws java.io.IOException {
-            getSerializedSize();
-            if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                output.writeBytes(1, getAppIdBytes());
-            }
-            if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                output.writeBytes(2, getConfirmIntentBytes());
-            }
-            if (((bitField0_ & 0x00000004) == 0x00000004)) {
-                output.writeBytes(3, getConfirmSlotBytes());
-            }
-            for (int i = 0; i < confirmOptions_.size(); i++) {
-                output.writeBytes(4, confirmOptions_.getByteString(i));
-            }
-            if (((bitField0_ & 0x00000008) == 0x00000008)) {
-                output.writeBytes(5, getAttributesBytes());
-            }
-            getUnknownFields().writeTo(output);
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public Builder setConfirmSlot(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000004;
+        confirmSlot_ = value;
+        onChanged();
+        return this;
+      }
 
-        private int memoizedSerializedSize = -1;
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public Builder clearConfirmSlot() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        confirmSlot_ = getDefaultInstance().getConfirmSlot();
+        onChanged();
+        return this;
+      }
 
-        public int getSerializedSize() {
-            int size = memoizedSerializedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(1, getAppIdBytes());
-            }
-            if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(2, getConfirmIntentBytes());
-            }
-            if (((bitField0_ & 0x00000004) == 0x00000004)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(3, getConfirmSlotBytes());
-            }
-            {
-                int dataSize = 0;
-                for (int i = 0; i < confirmOptions_.size(); i++) {
-                    dataSize += com.google.protobuf.CodedOutputStream
-                            .computeBytesSizeNoTag(confirmOptions_.getByteString(i));
-                }
-                size += dataSize;
-                size += 1 * getConfirmOptionsList().size();
-            }
-            if (((bitField0_ & 0x00000008) == 0x00000008)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(5, getAttributesBytes());
-            }
-            size += getUnknownFields().getSerializedSize();
-            memoizedSerializedSize = size;
-            return size;
+      /**
+       * <code>required string confirmSlot = 3;</code>
+       */
+      public Builder setConfirmSlotBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000004;
+        confirmSlot_ = value;
+        onChanged();
+        return this;
+      }
 
-        private static final long serialVersionUID = 0L;
+      private com.google.protobuf.LazyStringList confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
 
-        @Override
-        protected Object writeReplace()
-                throws java.io.ObjectStreamException {
-            return super.writeReplace();
+      private void ensureConfirmOptionsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          confirmOptions_ = new com.google.protobuf.LazyStringArrayList(confirmOptions_);
+          bitField0_ |= 0x00000008;
         }
+      }
 
-        public static SetConfirmRequest parseFrom(
-                com.google.protobuf.ByteString data )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+      getConfirmOptionsList() {
+        return confirmOptions_.getUnmodifiableView();
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public int getConfirmOptionsCount() {
+        return confirmOptions_.size();
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public String getConfirmOptions( int index ) {
+        return confirmOptions_.get(index);
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+      getConfirmOptionsBytes( int index ) {
+        return confirmOptions_.getByteString(index);
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public Builder setConfirmOptions(
+              int index, String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        ensureConfirmOptionsIsMutable();
+        confirmOptions_.set(index, value);
+        onChanged();
+        return this;
+      }
 
-        public static SetConfirmRequest parseFrom(
-                com.google.protobuf.ByteString data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public Builder addConfirmOptions(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        ensureConfirmOptionsIsMutable();
+        confirmOptions_.add(value);
+        onChanged();
+        return this;
+      }
 
-        public static SetConfirmRequest parseFrom( byte[] data )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public Builder addAllConfirmOptions(
+              Iterable<String> values ) {
+        ensureConfirmOptionsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+                values, confirmOptions_);
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public Builder clearConfirmOptions() {
+        confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>repeated string confirmOptions = 4;</code>
+       */
+      public Builder addConfirmOptionsBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        ensureConfirmOptionsIsMutable();
+        confirmOptions_.add(value);
+        onChanged();
+        return this;
+      }
 
-        public static SetConfirmRequest parseFrom(
-                byte[] data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
+      private Object attributes_ = "";
+
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public boolean hasAttributes() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public String getAttributes() {
+        Object ref = attributes_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            attributes_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
         }
+      }
 
-        public static SetConfirmRequest parseFrom( java.io.InputStream input )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input);
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+      getAttributesBytes() {
+        Object ref = attributes_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          attributes_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        public static SetConfirmRequest parseFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public Builder setAttributes(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000010;
+        attributes_ = value;
+        onChanged();
+        return this;
+      }
 
-        public static SetConfirmRequest parseDelimitedFrom( java.io.InputStream input )
-                throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input);
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public Builder clearAttributes() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        attributes_ = getDefaultInstance().getAttributes();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>required string attributes = 5;</code>
+       */
+      public Builder setAttributesBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
-
-        public static SetConfirmRequest parseDelimitedFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input, extensionRegistry);
-        }
-
-        public static SetConfirmRequest parseFrom(
-                com.google.protobuf.CodedInputStream input )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static SetConfirmRequest parseFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static Builder newBuilder() {
-            return Builder.create();
-        }
-
-        public Builder newBuilderForType() {
-            return newBuilder();
-        }
-
-        public static Builder newBuilder( SetConfirmRequest prototype ) {
-            return newBuilder().mergeFrom(prototype);
-        }
-
-        public Builder toBuilder() {
-            return newBuilder(this);
-        }
-
-        @Override
-        protected Builder newBuilderForType(
-                BuilderParent parent ) {
-            Builder builder = new Builder(parent);
-            return builder;
-        }
-
-        /**
-         * Protobuf type {@code SetConfirmRequest}
-         */
-        public static final class Builder extends
-                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:SetConfirmRequest)
-                SetConfirmRequestOrBuilder {
-            public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-                return Confirm.internal_static_SetConfirmRequest_descriptor;
-            }
-
-            protected FieldAccessorTable
-            internalGetFieldAccessorTable() {
-                return Confirm.internal_static_SetConfirmRequest_fieldAccessorTable
-                        .ensureFieldAccessorsInitialized(
-                                SetConfirmRequest.class, Builder.class);
-            }
-
-            // Construct using Confirm.SetConfirmRequest.newBuilder()
-            private Builder() {
-                maybeForceBuilderInitialization();
-            }
-
-            private Builder(
-                    BuilderParent parent ) {
-                super(parent);
-                maybeForceBuilderInitialization();
-            }
-
-            private void maybeForceBuilderInitialization() {
-                if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-                }
-            }
-
-            private static Builder create() {
-                return new Builder();
-            }
-
-            public Builder clear() {
-                super.clear();
-                appId_ = "";
-                bitField0_ = (bitField0_ & ~0x00000001);
-                confirmIntent_ = "";
-                bitField0_ = (bitField0_ & ~0x00000002);
-                confirmSlot_ = "";
-                bitField0_ = (bitField0_ & ~0x00000004);
-                confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-                bitField0_ = (bitField0_ & ~0x00000008);
-                attributes_ = "";
-                bitField0_ = (bitField0_ & ~0x00000010);
-                return this;
-            }
-
-            public Builder clone() {
-                return create().mergeFrom(buildPartial());
-            }
-
-            public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-                return Confirm.internal_static_SetConfirmRequest_descriptor;
-            }
-
-            public SetConfirmRequest getDefaultInstanceForType() {
-                return SetConfirmRequest.getDefaultInstance();
-            }
-
-            public SetConfirmRequest build() {
-                SetConfirmRequest result = buildPartial();
-                if (!result.isInitialized()) {
-                    throw newUninitializedMessageException(result);
-                }
-                return result;
-            }
-
-            public SetConfirmRequest buildPartial() {
-                SetConfirmRequest result = new SetConfirmRequest(this);
-                int from_bitField0_ = bitField0_;
-                int to_bitField0_ = 0;
-                if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-                    to_bitField0_ |= 0x00000001;
-                }
-                result.appId_ = appId_;
-                if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-                    to_bitField0_ |= 0x00000002;
-                }
-                result.confirmIntent_ = confirmIntent_;
-                if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-                    to_bitField0_ |= 0x00000004;
-                }
-                result.confirmSlot_ = confirmSlot_;
-                if (((bitField0_ & 0x00000008) == 0x00000008)) {
-                    confirmOptions_ = confirmOptions_.getUnmodifiableView();
-                    bitField0_ = (bitField0_ & ~0x00000008);
-                }
-                result.confirmOptions_ = confirmOptions_;
-                if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-                    to_bitField0_ |= 0x00000008;
-                }
-                result.attributes_ = attributes_;
-                result.bitField0_ = to_bitField0_;
-                onBuilt();
-                return result;
-            }
-
-            public Builder mergeFrom( com.google.protobuf.Message other ) {
-                if (other instanceof SetConfirmRequest) {
-                    return mergeFrom((SetConfirmRequest) other);
-                } else {
-                    super.mergeFrom(other);
-                    return this;
-                }
-            }
-
-            public Builder mergeFrom( SetConfirmRequest other ) {
-                if (other == SetConfirmRequest.getDefaultInstance()) return this;
-                if (other.hasAppId()) {
-                    bitField0_ |= 0x00000001;
-                    appId_ = other.appId_;
-                    onChanged();
-                }
-                if (other.hasConfirmIntent()) {
-                    bitField0_ |= 0x00000002;
-                    confirmIntent_ = other.confirmIntent_;
-                    onChanged();
-                }
-                if (other.hasConfirmSlot()) {
-                    bitField0_ |= 0x00000004;
-                    confirmSlot_ = other.confirmSlot_;
-                    onChanged();
-                }
-                if (!other.confirmOptions_.isEmpty()) {
-                    if (confirmOptions_.isEmpty()) {
-                        confirmOptions_ = other.confirmOptions_;
-                        bitField0_ = (bitField0_ & ~0x00000008);
-                    } else {
-                        ensureConfirmOptionsIsMutable();
-                        confirmOptions_.addAll(other.confirmOptions_);
-                    }
-                    onChanged();
-                }
-                if (other.hasAttributes()) {
-                    bitField0_ |= 0x00000010;
-                    attributes_ = other.attributes_;
-                    onChanged();
-                }
-                this.mergeUnknownFields(other.getUnknownFields());
-                return this;
-            }
-
-            public final boolean isInitialized() {
-                if (!hasAppId()) {
-
-                    return false;
-                }
-                if (!hasConfirmIntent()) {
-
-                    return false;
-                }
-                if (!hasConfirmSlot()) {
-
-                    return false;
-                }
-                return hasAttributes();
-            }
-
-            public Builder mergeFrom(
-                    com.google.protobuf.CodedInputStream input,
-                    com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                    throws java.io.IOException {
-                SetConfirmRequest parsedMessage = null;
-                try {
-                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                    parsedMessage = (SetConfirmRequest) e.getUnfinishedMessage();
-                    throw e;
-                } finally {
-                    if (parsedMessage != null) {
-                        mergeFrom(parsedMessage);
-                    }
-                }
-                return this;
-            }
-
-            private int bitField0_;
-
-            private Object appId_ = "";
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public boolean hasAppId() {
-                return ((bitField0_ & 0x00000001) == 0x00000001);
-            }
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public String getAppId() {
-                Object ref = appId_;
-                if (!(ref instanceof String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    String s = bs.toStringUtf8();
-                    if (bs.isValidUtf8()) {
-                        appId_ = s;
-                    }
-                    return s;
-                } else {
-                    return (String) ref;
-                }
-            }
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public com.google.protobuf.ByteString
-            getAppIdBytes() {
-                Object ref = appId_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (String) ref);
-                    appId_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public Builder setAppId(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000001;
-                appId_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public Builder clearAppId() {
-                bitField0_ = (bitField0_ & ~0x00000001);
-                appId_ = getDefaultInstance().getAppId();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string appId = 1;</code>
-             */
-            public Builder setAppIdBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000001;
-                appId_ = value;
-                onChanged();
-                return this;
-            }
-
-            private Object confirmIntent_ = "";
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public boolean hasConfirmIntent() {
-                return ((bitField0_ & 0x00000002) == 0x00000002);
-            }
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public String getConfirmIntent() {
-                Object ref = confirmIntent_;
-                if (!(ref instanceof String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    String s = bs.toStringUtf8();
-                    if (bs.isValidUtf8()) {
-                        confirmIntent_ = s;
-                    }
-                    return s;
-                } else {
-                    return (String) ref;
-                }
-            }
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public com.google.protobuf.ByteString
-            getConfirmIntentBytes() {
-                Object ref = confirmIntent_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (String) ref);
-                    confirmIntent_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public Builder setConfirmIntent(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000002;
-                confirmIntent_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public Builder clearConfirmIntent() {
-                bitField0_ = (bitField0_ & ~0x00000002);
-                confirmIntent_ = getDefaultInstance().getConfirmIntent();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string confirmIntent = 2;</code>
-             */
-            public Builder setConfirmIntentBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000002;
-                confirmIntent_ = value;
-                onChanged();
-                return this;
-            }
-
-            private Object confirmSlot_ = "";
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public boolean hasConfirmSlot() {
-                return ((bitField0_ & 0x00000004) == 0x00000004);
-            }
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public String getConfirmSlot() {
-                Object ref = confirmSlot_;
-                if (!(ref instanceof String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    String s = bs.toStringUtf8();
-                    if (bs.isValidUtf8()) {
-                        confirmSlot_ = s;
-                    }
-                    return s;
-                } else {
-                    return (String) ref;
-                }
-            }
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public com.google.protobuf.ByteString
-            getConfirmSlotBytes() {
-                Object ref = confirmSlot_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (String) ref);
-                    confirmSlot_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public Builder setConfirmSlot(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000004;
-                confirmSlot_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public Builder clearConfirmSlot() {
-                bitField0_ = (bitField0_ & ~0x00000004);
-                confirmSlot_ = getDefaultInstance().getConfirmSlot();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string confirmSlot = 3;</code>
-             */
-            public Builder setConfirmSlotBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000004;
-                confirmSlot_ = value;
-                onChanged();
-                return this;
-            }
-
-            private com.google.protobuf.LazyStringList confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-
-            private void ensureConfirmOptionsIsMutable() {
-                if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-                    confirmOptions_ = new com.google.protobuf.LazyStringArrayList(confirmOptions_);
-                    bitField0_ |= 0x00000008;
-                }
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public com.google.protobuf.ProtocolStringList
-            getConfirmOptionsList() {
-                return confirmOptions_.getUnmodifiableView();
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public int getConfirmOptionsCount() {
-                return confirmOptions_.size();
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public String getConfirmOptions( int index ) {
-                return confirmOptions_.get(index);
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public com.google.protobuf.ByteString
-            getConfirmOptionsBytes( int index ) {
-                return confirmOptions_.getByteString(index);
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public Builder setConfirmOptions(
-                    int index, String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureConfirmOptionsIsMutable();
-                confirmOptions_.set(index, value);
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public Builder addConfirmOptions(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureConfirmOptionsIsMutable();
-                confirmOptions_.add(value);
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public Builder addAllConfirmOptions(
-                    Iterable<String> values ) {
-                ensureConfirmOptionsIsMutable();
-                com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                        values, confirmOptions_);
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public Builder clearConfirmOptions() {
-                confirmOptions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-                bitField0_ = (bitField0_ & ~0x00000008);
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>repeated string confirmOptions = 4;</code>
-             */
-            public Builder addConfirmOptionsBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureConfirmOptionsIsMutable();
-                confirmOptions_.add(value);
-                onChanged();
-                return this;
-            }
-
-            private Object attributes_ = "";
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public boolean hasAttributes() {
-                return ((bitField0_ & 0x00000010) == 0x00000010);
-            }
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public String getAttributes() {
-                Object ref = attributes_;
-                if (!(ref instanceof String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    String s = bs.toStringUtf8();
-                    if (bs.isValidUtf8()) {
-                        attributes_ = s;
-                    }
-                    return s;
-                } else {
-                    return (String) ref;
-                }
-            }
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public com.google.protobuf.ByteString
-            getAttributesBytes() {
-                Object ref = attributes_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (String) ref);
-                    attributes_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public Builder setAttributes(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000010;
-                attributes_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public Builder clearAttributes() {
-                bitField0_ = (bitField0_ & ~0x00000010);
-                attributes_ = getDefaultInstance().getAttributes();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string attributes = 5;</code>
-             */
-            public Builder setAttributesBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000010;
-                attributes_ = value;
-                onChanged();
-                return this;
-            }
-
-            // @@protoc_insertion_point(builder_scope:SetConfirmRequest)
-        }
-
-        static {
-            defaultInstance = new SetConfirmRequest(true);
-            defaultInstance.initFields();
-        }
-
-        // @@protoc_insertion_point(class_scope:SetConfirmRequest)
+        bitField0_ |= 0x00000010;
+        attributes_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:SetConfirmRequest)
     }
 
-    public interface SetConfirmResponseOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:SetConfirmResponse)
-            com.google.protobuf.MessageOrBuilder {
+    static {
+      defaultInstance = new SetConfirmRequest(true);
+      defaultInstance.initFields();
+    }
 
-        /**
-         * <code>required bool success = 1;</code>
-         */
-        boolean hasSuccess();
+    // @@protoc_insertion_point(class_scope:SetConfirmRequest)
+  }
 
-        /**
-         * <code>required bool success = 1;</code>
-         */
-        boolean getSuccess();
+  public interface SetConfirmResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:SetConfirmResponse)
+          com.google.protobuf.MessageOrBuilder {
 
-        /**
-         * <code>required string message = 2;</code>
-         */
-        boolean hasMessage();
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    boolean hasSuccess();
 
-        /**
-         * <code>required string message = 2;</code>
-         */
-        String getMessage();
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    boolean getSuccess();
 
-        /**
-         * <code>required string message = 2;</code>
-         */
-        com.google.protobuf.ByteString
-        getMessageBytes();
+    /**
+     * <code>required string message = 2;</code>
+     */
+    boolean hasMessage();
+
+    /**
+     * <code>required string message = 2;</code>
+     */
+    String getMessage();
+
+    /**
+     * <code>required string message = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getMessageBytes();
+  }
+
+  /**
+   * Protobuf type {@code SetConfirmResponse}
+   */
+  public static final class SetConfirmResponse extends
+          com.google.protobuf.GeneratedMessage implements
+          // @@protoc_insertion_point(message_implements:SetConfirmResponse)
+          SetConfirmResponseOrBuilder {
+    // Use SetConfirmResponse.newBuilder() to construct.
+    private SetConfirmResponse( com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+
+    private SetConfirmResponse( boolean noInit ) {
+      this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+
+    private static final SetConfirmResponse defaultInstance;
+
+    public static SetConfirmResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public SetConfirmResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+
+    private SetConfirmResponse(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                      extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              success_ = input.readBool();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              message_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+      return Confirm.internal_static_SetConfirmResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return Confirm.internal_static_SetConfirmResponse_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      Confirm.SetConfirmResponse.class, Confirm.SetConfirmResponse.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<SetConfirmResponse> PARSER =
+            new com.google.protobuf.AbstractParser<SetConfirmResponse>() {
+              public SetConfirmResponse parsePartialFrom(
+                      com.google.protobuf.CodedInputStream input,
+                      com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+                      throws com.google.protobuf.InvalidProtocolBufferException {
+                return new SetConfirmResponse(input, extensionRegistry);
+              }
+            };
+
+    @Override
+    public com.google.protobuf.Parser<SetConfirmResponse> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_;
+
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    public boolean hasSuccess() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 2;
+    private Object message_;
+
+    /**
+     * <code>required string message = 2;</code>
+     */
+    public boolean hasMessage() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+
+    /**
+     * <code>required string message = 2;</code>
+     */
+    public String getMessage() {
+      Object ref = message_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          message_ = s;
+        }
+        return s;
+      }
+    }
+
+    /**
+     * <code>required string message = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+    getMessageBytes() {
+      Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      success_ = false;
+      message_ = "";
+    }
+
+    private byte memoizedIsInitialized = -1;
+
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasSuccess()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMessage()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo( com.google.protobuf.CodedOutputStream output )
+            throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(1, success_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getMessageBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(1, success_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(2, getMessageBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+
+    @Override
+    protected Object writeReplace()
+            throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            com.google.protobuf.ByteString data )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom( byte[] data )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom( java.io.InputStream input )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmResponse parseDelimitedFrom( java.io.InputStream input )
+            throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+
+    public static Confirm.SetConfirmResponse parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            com.google.protobuf.CodedInputStream input )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+
+    public static Confirm.SetConfirmResponse parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+            throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+      return Builder.create();
+    }
+
+    public Builder newBuilderForType() {
+      return newBuilder();
+    }
+
+    public static Builder newBuilder( Confirm.SetConfirmResponse prototype ) {
+      return newBuilder().mergeFrom(prototype);
+    }
+
+    public Builder toBuilder() {
+      return newBuilder(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent ) {
+      Builder builder = new Builder(parent);
+      return builder;
     }
 
     /**
      * Protobuf type {@code SetConfirmResponse}
      */
-    public static final class SetConfirmResponse extends
-            com.google.protobuf.GeneratedMessage implements
-            // @@protoc_insertion_point(message_implements:SetConfirmResponse)
-            SetConfirmResponseOrBuilder {
-        // Use SetConfirmResponse.newBuilder() to construct.
-        private SetConfirmResponse( com.google.protobuf.GeneratedMessage.Builder<?> builder ) {
-            super(builder);
-            this.unknownFields = builder.getUnknownFields();
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:SetConfirmResponse)
+            Confirm.SetConfirmResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+      getDescriptor() {
+        return Confirm.internal_static_SetConfirmResponse_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return Confirm.internal_static_SetConfirmResponse_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        Confirm.SetConfirmResponse.class, Confirm.SetConfirmResponse.Builder.class);
+      }
+
+      // Construct using Confirm.SetConfirmResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+              com.google.protobuf.GeneratedMessage.BuilderParent parent ) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
+      }
 
-        private SetConfirmResponse( boolean noInit ) {
-            this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        success_ = false;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        message_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+      getDescriptorForType() {
+        return Confirm.internal_static_SetConfirmResponse_descriptor;
+      }
+
+      public Confirm.SetConfirmResponse getDefaultInstanceForType() {
+        return Confirm.SetConfirmResponse.getDefaultInstance();
+      }
+
+      public Confirm.SetConfirmResponse build() {
+        Confirm.SetConfirmResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
         }
+        return result;
+      }
 
-        private static final SetConfirmResponse defaultInstance;
-
-        public static SetConfirmResponse getDefaultInstance() {
-            return defaultInstance;
+      public Confirm.SetConfirmResponse buildPartial() {
+        Confirm.SetConfirmResponse result = new Confirm.SetConfirmResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-
-        public SetConfirmResponse getDefaultInstanceForType() {
-            return defaultInstance;
+        result.success_ = success_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
         }
+        result.message_ = message_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
 
-        private final com.google.protobuf.UnknownFieldSet unknownFields;
-
-        @Override
-        public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-            return this.unknownFields;
+      public Builder mergeFrom( com.google.protobuf.Message other ) {
+        if (other instanceof Confirm.SetConfirmResponse) {
+          return mergeFrom((Confirm.SetConfirmResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
         }
+      }
 
-        private SetConfirmResponse(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            initFields();
-            int mutable_bitField0_ = 0;
-            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-                    com.google.protobuf.UnknownFieldSet.newBuilder();
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        default: {
-                            if (!parseUnknownField(input, unknownFields,
-                                    extensionRegistry, tag)) {
-                                done = true;
-                            }
-                            break;
-                        }
-                        case 8: {
-                            bitField0_ |= 0x00000001;
-                            success_ = input.readBool();
-                            break;
-                        }
-                        case 18: {
-                            com.google.protobuf.ByteString bs = input.readBytes();
-                            bitField0_ |= 0x00000002;
-                            message_ = bs;
-                            break;
-                        }
-                    }
-                }
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(this);
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(
-                        e.getMessage()).setUnfinishedMessage(this);
-            } finally {
-                this.unknownFields = unknownFields.build();
-                makeExtensionsImmutable();
-            }
+      public Builder mergeFrom( Confirm.SetConfirmResponse other ) {
+        if (other == Confirm.SetConfirmResponse.getDefaultInstance()) return this;
+        if (other.hasSuccess()) {
+          setSuccess(other.getSuccess());
         }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return Confirm.internal_static_SetConfirmResponse_descriptor;
+        if (other.hasMessage()) {
+          bitField0_ |= 0x00000002;
+          message_ = other.message_;
+          onChanged();
         }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
 
-        protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return Confirm.internal_static_SetConfirmResponse_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            SetConfirmResponse.class, Builder.class);
+      public final boolean isInitialized() {
+        if (!hasSuccess()) {
+
+          return false;
         }
+        return hasMessage();
+      }
 
-        public static com.google.protobuf.Parser<SetConfirmResponse> PARSER =
-                new com.google.protobuf.AbstractParser<SetConfirmResponse>() {
-                    public SetConfirmResponse parsePartialFrom(
-                            com.google.protobuf.CodedInputStream input,
-                            com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                            throws com.google.protobuf.InvalidProtocolBufferException {
-                        return new SetConfirmResponse(input, extensionRegistry);
-                    }
-                };
-
-        @Override
-        public com.google.protobuf.Parser<SetConfirmResponse> getParserForType() {
-            return PARSER;
+      public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry )
+              throws java.io.IOException {
+        Confirm.SetConfirmResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (Confirm.SetConfirmResponse) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
         }
+        return this;
+      }
 
-        private int bitField0_;
-        public static final int SUCCESS_FIELD_NUMBER = 1;
-        private boolean success_;
+      private int bitField0_;
 
-        /**
-         * <code>required bool success = 1;</code>
-         */
-        public boolean hasSuccess() {
-            return ((bitField0_ & 0x00000001) == 0x00000001);
+      private boolean success_;
+
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public boolean hasSuccess() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public boolean getSuccess() {
+        return success_;
+      }
+
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public Builder setSuccess( boolean value ) {
+        bitField0_ |= 0x00000001;
+        success_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public Builder clearSuccess() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        success_ = false;
+        onChanged();
+        return this;
+      }
+
+      private Object message_ = "";
+
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public boolean hasMessage() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public String getMessage() {
+        Object ref = message_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            message_ = s;
+          }
+          return s;
+        } else {
+          return (String) ref;
         }
+      }
 
-        /**
-         * <code>required bool success = 1;</code>
-         */
-        public boolean getSuccess() {
-            return success_;
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+      getMessageBytes() {
+        Object ref = message_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          message_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        public static final int MESSAGE_FIELD_NUMBER = 2;
-        private Object message_;
-
-        /**
-         * <code>required string message = 2;</code>
-         */
-        public boolean hasMessage() {
-            return ((bitField0_ & 0x00000002) == 0x00000002);
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public Builder setMessage(
+              String value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000002;
+        message_ = value;
+        onChanged();
+        return this;
+      }
 
-        /**
-         * <code>required string message = 2;</code>
-         */
-        public String getMessage() {
-            Object ref = message_;
-            if (ref instanceof String) {
-                return (String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                String s = bs.toStringUtf8();
-                if (bs.isValidUtf8()) {
-                    message_ = s;
-                }
-                return s;
-            }
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public Builder clearMessage() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>required string message = 2;</code>
+       */
+      public Builder setMessageBytes(
+              com.google.protobuf.ByteString value ) {
+        if (value == null) {
+          throw new NullPointerException();
         }
+        bitField0_ |= 0x00000002;
+        message_ = value;
+        onChanged();
+        return this;
+      }
 
-        /**
-         * <code>required string message = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-        getMessageBytes() {
-            Object ref = message_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (String) ref);
-                message_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
-        }
-
-        private void initFields() {
-            success_ = false;
-            message_ = "";
-        }
-
-        private byte memoizedIsInitialized = -1;
-
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized == 1) return true;
-            if (isInitialized == 0) return false;
-
-            if (!hasSuccess()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            if (!hasMessage()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        public void writeTo( com.google.protobuf.CodedOutputStream output )
-                throws java.io.IOException {
-            getSerializedSize();
-            if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                output.writeBool(1, success_);
-            }
-            if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                output.writeBytes(2, getMessageBytes());
-            }
-            getUnknownFields().writeTo(output);
-        }
-
-        private int memoizedSerializedSize = -1;
-
-        public int getSerializedSize() {
-            int size = memoizedSerializedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBoolSize(1, success_);
-            }
-            if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(2, getMessageBytes());
-            }
-            size += getUnknownFields().getSerializedSize();
-            memoizedSerializedSize = size;
-            return size;
-        }
-
-        private static final long serialVersionUID = 0L;
-
-        @Override
-        protected Object writeReplace()
-                throws java.io.ObjectStreamException {
-            return super.writeReplace();
-        }
-
-        public static SetConfirmResponse parseFrom(
-                com.google.protobuf.ByteString data )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static SetConfirmResponse parseFrom(
-                com.google.protobuf.ByteString data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static SetConfirmResponse parseFrom( byte[] data )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static SetConfirmResponse parseFrom(
-                byte[] data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static SetConfirmResponse parseFrom( java.io.InputStream input )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static SetConfirmResponse parseFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static SetConfirmResponse parseDelimitedFrom( java.io.InputStream input )
-                throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input);
-        }
-
-        public static SetConfirmResponse parseDelimitedFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input, extensionRegistry);
-        }
-
-        public static SetConfirmResponse parseFrom(
-                com.google.protobuf.CodedInputStream input )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static SetConfirmResponse parseFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static Builder newBuilder() {
-            return Builder.create();
-        }
-
-        public Builder newBuilderForType() {
-            return newBuilder();
-        }
-
-        public static Builder newBuilder( SetConfirmResponse prototype ) {
-            return newBuilder().mergeFrom(prototype);
-        }
-
-        public Builder toBuilder() {
-            return newBuilder(this);
-        }
-
-        @Override
-        protected Builder newBuilderForType(
-                BuilderParent parent ) {
-            Builder builder = new Builder(parent);
-            return builder;
-        }
-
-        /**
-         * Protobuf type {@code SetConfirmResponse}
-         */
-        public static final class Builder extends
-                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:SetConfirmResponse)
-                SetConfirmResponseOrBuilder {
-            public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-                return Confirm.internal_static_SetConfirmResponse_descriptor;
-            }
-
-            protected FieldAccessorTable
-            internalGetFieldAccessorTable() {
-                return Confirm.internal_static_SetConfirmResponse_fieldAccessorTable
-                        .ensureFieldAccessorsInitialized(
-                                SetConfirmResponse.class, Builder.class);
-            }
-
-            // Construct using Confirm.SetConfirmResponse.newBuilder()
-            private Builder() {
-                maybeForceBuilderInitialization();
-            }
-
-            private Builder(
-                    BuilderParent parent ) {
-                super(parent);
-                maybeForceBuilderInitialization();
-            }
-
-            private void maybeForceBuilderInitialization() {
-                if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-                }
-            }
-
-            private static Builder create() {
-                return new Builder();
-            }
-
-            public Builder clear() {
-                super.clear();
-                success_ = false;
-                bitField0_ = (bitField0_ & ~0x00000001);
-                message_ = "";
-                bitField0_ = (bitField0_ & ~0x00000002);
-                return this;
-            }
-
-            public Builder clone() {
-                return create().mergeFrom(buildPartial());
-            }
-
-            public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-                return Confirm.internal_static_SetConfirmResponse_descriptor;
-            }
-
-            public SetConfirmResponse getDefaultInstanceForType() {
-                return SetConfirmResponse.getDefaultInstance();
-            }
-
-            public SetConfirmResponse build() {
-                SetConfirmResponse result = buildPartial();
-                if (!result.isInitialized()) {
-                    throw newUninitializedMessageException(result);
-                }
-                return result;
-            }
-
-            public SetConfirmResponse buildPartial() {
-                SetConfirmResponse result = new SetConfirmResponse(this);
-                int from_bitField0_ = bitField0_;
-                int to_bitField0_ = 0;
-                if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-                    to_bitField0_ |= 0x00000001;
-                }
-                result.success_ = success_;
-                if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-                    to_bitField0_ |= 0x00000002;
-                }
-                result.message_ = message_;
-                result.bitField0_ = to_bitField0_;
-                onBuilt();
-                return result;
-            }
-
-            public Builder mergeFrom( com.google.protobuf.Message other ) {
-                if (other instanceof SetConfirmResponse) {
-                    return mergeFrom((SetConfirmResponse) other);
-                } else {
-                    super.mergeFrom(other);
-                    return this;
-                }
-            }
-
-            public Builder mergeFrom( SetConfirmResponse other ) {
-                if (other == SetConfirmResponse.getDefaultInstance()) return this;
-                if (other.hasSuccess()) {
-                    setSuccess(other.getSuccess());
-                }
-                if (other.hasMessage()) {
-                    bitField0_ |= 0x00000002;
-                    message_ = other.message_;
-                    onChanged();
-                }
-                this.mergeUnknownFields(other.getUnknownFields());
-                return this;
-            }
-
-            public final boolean isInitialized() {
-                if (!hasSuccess()) {
-
-                    return false;
-                }
-                return hasMessage();
-            }
-
-            public Builder mergeFrom(
-                    com.google.protobuf.CodedInputStream input,
-                    com.google.protobuf.ExtensionRegistryLite extensionRegistry )
-                    throws java.io.IOException {
-                SetConfirmResponse parsedMessage = null;
-                try {
-                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                    parsedMessage = (SetConfirmResponse) e.getUnfinishedMessage();
-                    throw e;
-                } finally {
-                    if (parsedMessage != null) {
-                        mergeFrom(parsedMessage);
-                    }
-                }
-                return this;
-            }
-
-            private int bitField0_;
-
-            private boolean success_;
-
-            /**
-             * <code>required bool success = 1;</code>
-             */
-            public boolean hasSuccess() {
-                return ((bitField0_ & 0x00000001) == 0x00000001);
-            }
-
-            /**
-             * <code>required bool success = 1;</code>
-             */
-            public boolean getSuccess() {
-                return success_;
-            }
-
-            /**
-             * <code>required bool success = 1;</code>
-             */
-            public Builder setSuccess( boolean value ) {
-                bitField0_ |= 0x00000001;
-                success_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required bool success = 1;</code>
-             */
-            public Builder clearSuccess() {
-                bitField0_ = (bitField0_ & ~0x00000001);
-                success_ = false;
-                onChanged();
-                return this;
-            }
-
-            private Object message_ = "";
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public boolean hasMessage() {
-                return ((bitField0_ & 0x00000002) == 0x00000002);
-            }
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public String getMessage() {
-                Object ref = message_;
-                if (!(ref instanceof String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    String s = bs.toStringUtf8();
-                    if (bs.isValidUtf8()) {
-                        message_ = s;
-                    }
-                    return s;
-                } else {
-                    return (String) ref;
-                }
-            }
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public com.google.protobuf.ByteString
-            getMessageBytes() {
-                Object ref = message_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (String) ref);
-                    message_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public Builder setMessage(
-                    String value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000002;
-                message_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public Builder clearMessage() {
-                bitField0_ = (bitField0_ & ~0x00000002);
-                message_ = getDefaultInstance().getMessage();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>required string message = 2;</code>
-             */
-            public Builder setMessageBytes(
-                    com.google.protobuf.ByteString value ) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000002;
-                message_ = value;
-                onChanged();
-                return this;
-            }
-
-            // @@protoc_insertion_point(builder_scope:SetConfirmResponse)
-        }
-
-        static {
-            defaultInstance = new SetConfirmResponse(true);
-            defaultInstance.initFields();
-        }
-
-        // @@protoc_insertion_point(class_scope:SetConfirmResponse)
+      // @@protoc_insertion_point(builder_scope:SetConfirmResponse)
     }
-
-    private static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_SetConfirmRequest_descriptor;
-    private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_SetConfirmRequest_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_SetConfirmResponse_descriptor;
-    private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_SetConfirmResponse_fieldAccessorTable;
-
-    public static com.google.protobuf.Descriptors.FileDescriptor
-    getDescriptor() {
-        return descriptor;
-    }
-
-    private static com.google.protobuf.Descriptors.FileDescriptor
-            descriptor;
 
     static {
-        String[] descriptorData = {
-                "\n\rConfirm.proto\"z\n\021SetConfirmRequest\022\r\n\005" +
-                        "appId\030\001 \002(\t\022\025\n\rconfirmIntent\030\002 \002(\t\022\023\n\013co" +
-                        "nfirmSlot\030\003 \002(\t\022\026\n\016confirmOptions\030\004 \003(\t\022" +
-                        "\022\n\nattributes\030\005 \002(\t\"6\n\022SetConfirmRespons" +
-                        "e\022\017\n\007success\030\001 \002(\010\022\017\n\007message\030\002 \002(\t"
-        };
-        com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-                new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-                    public com.google.protobuf.ExtensionRegistry assignDescriptors(
-                            com.google.protobuf.Descriptors.FileDescriptor root ) {
-                        descriptor = root;
-                        return null;
-                    }
-                };
-        com.google.protobuf.Descriptors.FileDescriptor
-                .internalBuildGeneratedFileFrom(descriptorData,
-                        new com.google.protobuf.Descriptors.FileDescriptor[]{
-                        }, assigner);
-        internal_static_SetConfirmRequest_descriptor =
-                getDescriptor().getMessageTypes().get(0);
-        internal_static_SetConfirmRequest_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                internal_static_SetConfirmRequest_descriptor,
-                new String[]{"AppId", "ConfirmIntent", "ConfirmSlot", "ConfirmOptions", "Attributes",});
-        internal_static_SetConfirmResponse_descriptor =
-                getDescriptor().getMessageTypes().get(1);
-        internal_static_SetConfirmResponse_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                internal_static_SetConfirmResponse_descriptor,
-                new String[]{"Success", "Message",});
+      defaultInstance = new SetConfirmResponse(true);
+      defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(class_scope:SetConfirmResponse)
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+          internal_static_SetConfirmRequest_descriptor;
+  private static
+  com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internal_static_SetConfirmRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+          internal_static_SetConfirmResponse_descriptor;
+  private static
+  com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internal_static_SetConfirmResponse_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+  getDescriptor() {
+    return descriptor;
+  }
+
+  private static com.google.protobuf.Descriptors.FileDescriptor
+          descriptor;
+
+  static {
+    String[] descriptorData = {
+            "\n\rConfirm.proto\"z\n\021SetConfirmRequest\022\r\n\005" +
+                    "appId\030\001 \002(\t\022\025\n\rconfirmIntent\030\002 \002(\t\022\023\n\013co" +
+                    "nfirmSlot\030\003 \002(\t\022\026\n\016confirmOptions\030\004 \003(\t\022" +
+                    "\022\n\nattributes\030\005 \002(\t\"6\n\022SetConfirmRespons" +
+                    "e\022\017\n\007success\030\001 \002(\010\022\017\n\007message\030\002 \002(\t"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+            new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+              public com.google.protobuf.ExtensionRegistry assignDescriptors(
+                      com.google.protobuf.Descriptors.FileDescriptor root ) {
+                descriptor = root;
+                return null;
+              }
+            };
+    com.google.protobuf.Descriptors.FileDescriptor
+            .internalBuildGeneratedFileFrom(descriptorData,
+                    new com.google.protobuf.Descriptors.FileDescriptor[]{
+                    }, assigner);
+    internal_static_SetConfirmRequest_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_SetConfirmRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_SetConfirmRequest_descriptor,
+        new String[] { "AppId", "ConfirmIntent", "ConfirmSlot", "ConfirmOptions", "Attributes", });
+    internal_static_SetConfirmResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_SetConfirmResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_SetConfirmResponse_descriptor,
+        new String[] { "Success", "Message", });
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
 }

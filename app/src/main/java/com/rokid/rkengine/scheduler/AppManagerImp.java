@@ -29,7 +29,7 @@ public class AppManagerImp implements IAppManager {
 
     private IAppManagerProxy appManagerProxy;
 
-    private AppStateManager appStateManager;
+    private AppStateManager appStateManager = new AppStateManager();
 
     private AppStack appStack = AppStack.getInstance();
 
@@ -47,7 +47,6 @@ public class AppManagerImp implements IAppManager {
 
             Logger.d("onServiceConnected ");
             appManagerProxy = IAppManagerProxy.Stub.asInterface(service);
-            appStateManager = new AppStateManager();
             setAppStateCallBack(appStateManager);
         }
 

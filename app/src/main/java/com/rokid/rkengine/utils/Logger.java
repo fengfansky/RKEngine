@@ -2,7 +2,6 @@ package com.rokid.rkengine.utils;
 
 import android.util.Log;
 
-
 import java.util.Locale;
 
 public class Logger {

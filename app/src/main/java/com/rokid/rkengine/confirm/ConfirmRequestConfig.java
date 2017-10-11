@@ -2,7 +2,6 @@ package com.rokid.rkengine.confirm;
 
 import android.text.TextUtils;
 
-
 import com.rokid.rkengine.md5.MD5Utils;
 import com.rokid.rkengine.utils.Logger;
 
@@ -17,7 +16,7 @@ public class ConfirmRequestConfig {
 
     private static final String BASE_HTTP = "https://";
 
-    private static final String DEFAULT_HOST = "apigwrest-dev.open.rokid.com";
+    private static final String DEFAULT_HOST = "apigwrest.open.rokid.com";
 
     private static final String SEND_EVENT_PATH = "/v1/skill/dispatch/setConfirm";
 
@@ -34,6 +33,8 @@ public class ConfirmRequestConfig {
     private static final String PARAM_KEY_SECRET = "secret";
 
     private static final String PARAM_KEY_ACCOUNTID = "accountId";
+
+    private static final String KEY_HOST = "event_req_host";
 
     private static Map<String, String> params;
 
@@ -61,6 +62,8 @@ public class ConfirmRequestConfig {
 
         Logger.d(" deviceMap is " + deviceMap.toString());
 
+        mHost = deviceMap.get(KEY_HOST);
+
         params = new LinkedHashMap<>();
         putUnEmptyParam(PARAM_KEY_KEY, deviceMap.get(PARAM_KEY_KEY));
         putUnEmptyParam(PARAM_KEY_DEVICE_TYPE_ID, deviceMap.get(PARAM_KEY_DEVICE_TYPE_ID));
@@ -86,7 +89,7 @@ public class ConfirmRequestConfig {
     public static String getAuthorization() {
 
         //Logger.d("param invalidate !!!");
-        initDeviceInfo();
+        //initDeviceInfo();
         //return null;
 
         String authorization = params.toString()

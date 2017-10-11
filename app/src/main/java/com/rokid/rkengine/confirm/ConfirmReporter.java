@@ -49,6 +49,7 @@ public class ConfirmReporter implements Runnable {
         Response response;
         Confirm.SetConfirmResponse confirmResponse;
         try {
+            ConfirmRequestConfig.initDeviceInfo();
             Logger.d("url is " + ConfirmRequestConfig.getUrl());
             response = HttpClientWrapper.getInstance().sendRequest(ConfirmRequestConfig.getUrl(), confirmRequest);
 

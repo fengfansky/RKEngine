@@ -18,170 +18,189 @@ import rokid.rkengine.scheduler.AppInfo;
 
 public class ParserProxy {
 
-	private AppStarter appStarter;
+    private AppStarter appStarter;
 
-	private static final String FORM_SCENE = "scene";
+    private static final String FORM_SCENE = "scene";
 
-	private static final String FORM_CUT = "cut";
+    private static final String FORM_CUT = "cut";
 
-	public static final String INTENT_EXECUTE = "ROKID.INTENT.EXECUTE";
+    private static final String SERVICE = "service";
 
-	public static final String INTENT_EXIT = "ROKID.INTENT.EXIT";
+    public static final String INTENT_EXECUTE = "ROKID.INTENT.EXECUTE";
 
-	public static final String INTENT_CLEAR = "ROKID.SYSTEM.EXIT";
+    public static final String INTENT_EXIT = "ROKID.INTENT.EXIT";
 
-	public static ParserProxy getInstance() {
+    public static final String INTENT_CLEAR = "ROKID.SYSTEM.EXIT";
 
-		return SingleHolder.instance;
-	}
+    public static ParserProxy getInstance() {
 
-	public void startParse( final String nlpStr, String asr, String actionStr ) {
+        return SingleHolder.instance;
+    }
 
-		if (TextUtils.isEmpty(nlpStr) || TextUtils.isEmpty(actionStr)) {
-			Logger.e("str empty error!! action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
-			return;
-		}
-		Logger.d("action  ---> " + actionStr);
-		Logger.d("nlp -------> " + nlpStr);
-		Logger.d("asr -------> " + asr);
+    public void startParse( final String nlpStr, String asr, String actionStr ) {
 
-		JSONObject nlpObject = null;
-		try {
-			nlpObject = new JSONObject(nlpStr);
-		} catch (JSONException e) {
-			Logger.e(" JSONParseException : parse nlp error !");
-			e.printStackTrace();
-		}
+        if (TextUtils.isEmpty(nlpStr) || TextUtils.isEmpty(actionStr)) {
+            Logger.e("str empty error!! action:" + actionStr + " nlp: " + nlpStr + " asr: " + asr);
+            return;
+        }
+        Logger.d("action  ---> " + actionStr);
+        Logger.d("nlp -------> " + nlpStr);
+        Logger.d("asr -------> " + asr);
 
-		if (nlpObject == null) {
-			Logger.d("nlp is null!");
-			return;
-		}
+        JSONObject nlpObject = null;
+        try {
+            nlpObject = new JSONObject(nlpStr);
+        } catch (JSONException e) {
+            Logger.e(" JSONParseException : parse nlp error !");
+            e.printStackTrace();
+        }
 
-		String appId = null;
-		try {
-			appId = (String) nlpObject.get("appId");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+        if (nlpObject == null) {
+            Logger.d("nlp is null!");
+            return;
+        }
 
-		if (TextUtils.isEmpty(appId)) {
-			Logger.d(" appId is null !");
-			return;
-		}
+        String appId = null;
+        try {
+            appId = (String) nlpObject.get("appId");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-		boolean cloud = false;
+        if (TextUtils.isEmpty(appId)) {
+            Logger.d(" appId is null !");
+            return;
+        }
 
-		try {
-			cloud = (boolean) nlpObject.get("cloud");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+        boolean cloud = false;
 
-		JSONObject actionObject = null;
+        try {
+            cloud = (boolean) nlpObject.get("cloud");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-		try {
-			actionObject = new JSONObject(actionStr);
-		} catch (JSONException e) {
-			Logger.e(" JSONParseException : parse action error !");
-			e.printStackTrace();
-		}
+        String intent = null;
+        try {
+            intent = nlpObject.getString("intent");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-		if (actionObject == null) {
-			Logger.d("actionObject is null !");
-			return;
-		}
+        if (INTENT_CLEAR.equals(intent)) {
+            Logger.d("exit all app !");
+            AppManagerImp.getInstance().stopAllApp();
+            return;
+        }
 
-		JSONObject responseObj = null;
+        if (cloud) {
 
-		try {
-			responseObj = (JSONObject) actionObject.get("response");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+            JSONObject actionObject = null;
 
-		if (responseObj == null) {
-			Logger.d(" responseObj is null !");
-			return;
-		}
+            try {
+                actionObject = new JSONObject(actionStr);
+            } catch (JSONException e) {
+                Logger.e(" JSONParseException : parse action error !");
+                e.printStackTrace();
+            }
 
-		JSONObject actionObj = null;
+            if (actionObject == null) {
+                Logger.d("actionObject is null !");
+                return;
+            }
 
-		try {
-			actionObj = (JSONObject) responseObj.get("action");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+            JSONObject responseObj = null;
 
-		if (actionObj == null) {
-			Logger.d(" actionObj is null !");
-			return;
-		}
+            try {
+                responseObj = (JSONObject) actionObject.get("response");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-		String form = null;
+            if (responseObj == null) {
+                Logger.d(" responseObj is null !");
+                return;
+            }
 
-		try {
-			form = actionObj.getString("form");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+            JSONObject actionObj = null;
 
-		if (TextUtils.isEmpty(form)) {
-			Logger.d("form is null !");
-			return;
-		}
+            try {
+                actionObj = (JSONObject) responseObj.get("action");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-		String intent = null;
-		try {
-			intent = nlpObject.getString("intent");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+            if (actionObj == null) {
+                Logger.d(" actionObj is null !");
+                return;
+            }
 
-		if (INTENT_EXIT.equals(intent)) {
-			Logger.d(" exit app !");
-			if (cloud) {
-				switch (form) {
-					case FORM_SCENE:
-						appId = CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME;
-						break;
-					case FORM_CUT:
-						appId = CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME;
-						break;
-					default:
-						Logger.d("unknow form :  " + form);
-				}
-			}
-			AppInfo appInfo = AppManagerImp.getInstance().queryAppInfoByID(appId);
-			AppManagerImp.getInstance().stopApp(appInfo);
-			return;
-		} else if (INTENT_CLEAR.equals(intent)) {
-			Logger.d("exit all app !");
-			AppManagerImp.getInstance().stopAllApp();
-			return;
-		} else {
-			appStarter = new AppStarter();
-			if (cloud) {
-				switch (form) {
-					case FORM_SCENE:
-						appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, appId, actionStr);
-						break;
-					case FORM_CUT:
-						appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, appId, actionStr);
-						break;
-					default:
-						Logger.d("unknow form :  " + form);
-				}
-			} else {
-				appStarter.startNativeApp(appId, nlpStr);
-			}
-		}
+            String form = null;
 
-	}
+            try {
+                form = actionObj.getString("form");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-	private static class SingleHolder {
-		private static final ParserProxy instance = new ParserProxy();
-	}
+            if (TextUtils.isEmpty(form)) {
+                Logger.d("form is null !");
+                return;
+            }
+
+            if (INTENT_EXIT.equals(intent)) {
+                Logger.d(" exit app !");
+                switch (form) {
+                    case FORM_SCENE:
+                        appId = CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME;
+                        break;
+                    case FORM_CUT:
+                        appId = CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME;
+                        break;
+                    case SERVICE:
+                        appId = CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME;
+                    default:
+                        Logger.d("unknow form :  " + form);
+                }
+
+                AppInfo appInfo = AppManagerImp.getInstance().queryAppInfoByID(appId);
+                AppManagerImp.getInstance().stopApp(appInfo);
+                return;
+            }
+
+            appStarter = new AppStarter();
+            switch (form) {
+                case FORM_SCENE:
+                    CloudAppCheckConfig.storeCloudAppId(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, appId);
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_SCENE_APP_PACKAGE_NAME, actionStr);
+                    break;
+                case FORM_CUT:
+                    CloudAppCheckConfig.storeCloudAppId(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, appId);
+                    appStarter.startCloudApp(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, actionStr);
+                case SERVICE:
+                    appStarter.startCloudService(CloudAppCheckConfig.CLOUD_CUT_APP_PACKAGE_NAME, actionStr);
+                    break;
+                default:
+                    Logger.d("unknow form :  " + form);
+            }
+
+        } else {
+            if (INTENT_EXIT.equals(intent)) {
+                Logger.d(" exit app !");
+
+                AppInfo appInfo = AppManagerImp.getInstance().queryAppInfoByID(appId);
+                AppManagerImp.getInstance().stopApp(appInfo);
+                return;
+            }
+            appStarter = new AppStarter();
+            appStarter.startNativeApp(appId, nlpStr);
+
+        }
+
+    }
+
+    private static class SingleHolder {
+        private static final ParserProxy instance = new ParserProxy();
+    }
 
 }
-

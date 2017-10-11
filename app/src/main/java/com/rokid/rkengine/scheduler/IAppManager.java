@@ -9,21 +9,21 @@ import rokid.rkengine.scheduler.AppInfo;
  */
 
 public interface IAppManager {
-    void bindService(Context context);
+    void bindService( Context context );
 
     void unBindService();
 
-    void setAppStateCallBack(AppStateManager callback);
+    void setAppStateCallBack( AppStateManager callback );
 
-    AppInfo queryAppInfoByID(String appId);
+    AppInfo queryAppInfoByID( String appId );
 
-    void startApp(AppInfo appInfo, String extra);
+    void startApp( AppInfo appInfo, String extra );
 
-    void pauseApp(AppInfo appInfo);
+    void pauseApp( AppInfo appInfo );
 
-    void resumeApp(AppInfo appInfo, String extra);
+    void resumeApp( AppInfo appInfo, String extra );
 
-    void stopApp(AppInfo appInfo);
+    void stopApp( AppInfo appInfo );
 
     void stopAllApp();
 }

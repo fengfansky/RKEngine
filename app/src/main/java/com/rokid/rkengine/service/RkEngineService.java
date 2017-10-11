@@ -14,6 +14,7 @@ import com.rokid.rkengine.confirm.ReporterManager;
 import com.rokid.rkengine.parser.ParserProxy;
 import com.rokid.rkengine.scheduler.AppManagerImp;
 import com.rokid.rkengine.scheduler.AppStack;
+import com.rokid.rkengine.scheduler.AppStarter;
 import com.rokid.rkengine.utils.Logger;
 
 import org.json.JSONObject;
@@ -73,6 +74,7 @@ public class RkEngineService extends Service {
                         break;
                 }
 
+
             }
         });
         super.onCreate();
@@ -114,6 +116,13 @@ public class RkEngineService extends Service {
             Logger.d(" asr : " + asr);
             Logger.d("action : " + action);
             ParserProxy.getInstance().startParse(nlp, asr, action);
+        }
+
+        @Override
+        public void launchApp( String appId, String nlpStr ) {
+            Logger.d("launchApp RKEngineService start app " + appId + " nlpStr: " + nlpStr);
+            AppStarter appStarter = new AppStarter();
+            appStarter.startNativeApp(appId, nlpStr);
         }
 
         @Override

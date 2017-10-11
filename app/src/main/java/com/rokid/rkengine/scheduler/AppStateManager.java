@@ -1,7 +1,5 @@
 package com.rokid.rkengine.scheduler;
 
-import java.util.ArrayList;
-
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +10,12 @@ import com.rokid.rkengine.service.RkEngineService;
 import com.rokid.rkengine.utils.CloudAppCheckConfig;
 import com.rokid.rkengine.utils.Logger;
 
+import java.util.ArrayList;
+
 import rokid.rkengine.IAppStateCallback;
+import rokid.rkengine.IRKAppEngineAppContextChangeCallback;
 import rokid.rkengine.scheduler.AppException;
 import rokid.rkengine.scheduler.AppInfo;
-import rokid.rkengine.IRKAppEngineAppContextChangeCallback;
 
 /**
  * Created by fanfeng on 2017/4/18.
@@ -108,14 +108,13 @@ public class AppStateManager extends IAppStateCallback.Stub {
         }
 
         Logger.d(TAG, "onResume  " + appInfo.appId);
-        appStack.pushApp(appInfo);
         for (IRKAppEngineAppContextChangeCallback _contextChangeCallback : mContextChangeCallbacks) {
             if (_contextChangeCallback != null) {
                 _contextChangeCallback.onResume(appInfo);
             }
         }
 
-        sendPackageNameToActivation(appInfo.appId);
+        //  sendPackageNameToActivation(appInfo.appId);
     }
 
     @Override
@@ -124,7 +123,7 @@ public class AppStateManager extends IAppStateCallback.Stub {
             Logger.d("onStart appInfo is null");
             return;
         }
-
+        //appStack.pushApp(appInfo);
         Logger.d(TAG, "onStart " + appInfo.appId);
 
 
@@ -138,7 +137,7 @@ public class AppStateManager extends IAppStateCallback.Stub {
         }
         Logger.d(TAG, "onStop " + appInfo.appId);
         CloudAppCheckConfig.removeCloudAppId(appInfo.appId);
-        AppStack.getInstance().popApp(appInfo);
+        // AppStack.getInstance().popApp(appInfo);
 
         for (IRKAppEngineAppContextChangeCallback _contextChangeCallback : mContextChangeCallbacks) {
             if (_contextChangeCallback != null) {

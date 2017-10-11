@@ -28,6 +28,7 @@ public class CloudAppCheckConfig {
      * @param cloudAppId cloud
      */
     public static void storeCloudAppId(String appId, String cloudAppId) {
+        Logger.d("store appMap cloudAppId : " + cloudAppId + " appId : " + appId);
         if (TextUtils.isEmpty(appId)) {
             Logger.d("key is null !");
             return;
@@ -53,7 +54,6 @@ public class CloudAppCheckConfig {
 
     /**
      * appId -> cloud appId
-     *
      * @param appId
      * @return
      */
@@ -64,7 +64,7 @@ public class CloudAppCheckConfig {
 
     public static String getFinalAppId(String appId) {
         if (isCloudApp(appId)) {
-            Logger.d(" get CloudAppId :" + getCloudAppId(appId));
+            Logger.d(" appId : " + appId + " get CloudAppId :" + getCloudAppId(appId));
             return getCloudAppId(appId);
         }
         return appId;
